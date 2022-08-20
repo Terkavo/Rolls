@@ -1,0 +1,41 @@
+<div class="container ">
+  <div class="row">
+    <div class="mb-3 border col-md-3 col-sm-6">
+      <label for="#QuantityRoll" class="form-label">Количество</label>
+      <input type="number" #QuantityRoll (input)="OnInputQuantityRoll(QuantityRoll.value)" class="form-control" min="0"
+        max="100">
+    </div>
+    <div class="mb-3 border col-md-3 col-sm-6">
+      <label class="form-label w-100">Дата Прихода</label>
+      <input type="date" #dateArrival (input)="OnInputData(dateArrival.value)" />
+    </div>
+    <div class="mb-3 border col-md-6 col-sm-12">
+      <label class="form-label">Поставщик</label>
+      <textarea class="form-control" rows="1" [(ngModel)]="Provider"></textarea>
+    </div>
+    <div class="mb-3 border col-md-4">
+      <label class="form-label">Цвет</label>
+      <app-datalist [Optuons]="Collors" (myInput)="CollorEvent=$event"></app-datalist>
+    </div>
+    <div class="mb-3 border col-12 col-md-4">
+      <label class="form-label">Наименнование</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" [(ngModel)]="Name"></textarea>
+    </div>
+    <div class="mb-3 border col-12 col-md-4">
+      <label class="form-label">Коментарий</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" [(ngModel)]="Comment"></textarea>
+    </div>
+    <div class="mb-3 border col-12 col-md-2">
+      <label class="form-label">Единица измерения</label>
+      <app-datalist [Optuons]="UnitsOfMeasurement" (myInput)="UnitOfMeasurementEvent=$event"></app-datalist>
+    </div>
+  </div>
+  <div class="rolls">
+    <app-roll *ngFor="let iterRoll of Rolls;let i=index" [Roll]="iterRoll" [Index]="i"></app-roll>
+    <div> Кол-во рулонов {{CalculationOfRolls()}}{{Comment}}</div>
+  </div>
+  <div class="container">
+    <button type="button" class="btn btn-outline-primary" (click)="Save()"
+      [disabled]="!CollorEvent.IsCorrect||!UnitOfMeasurementEvent.IsCorrect||Rolls.length===0">Сохранить</button>
+  </div>
+</div>

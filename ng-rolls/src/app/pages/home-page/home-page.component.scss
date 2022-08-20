@@ -1,0 +1,8 @@
+.cell {
+    border-radius: 0.375rem;
+    border: 1px solid rgb(63 63 63);
+    min-height: 200px;
+  &:hover{
+    background-color: rgb(188 251 255);
+  }
+}

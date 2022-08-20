@@ -1,0 +1,20 @@
+.my-container {
+    display: flex;
+    background: rgb(149 252 221);
+}
+.are-you-here-text{
+    font-size: 18px;
+    font-weight: 700;
+    @media (min-width: 768px){
+    font-size: 30px;
+    }
+}
+.home-page{
+    max-width: 100px;
+    margin-right: 0;
+    margin-left: auto;
+    cursor: pointer;
+    &:hover{
+        background: white
+    }
+}  

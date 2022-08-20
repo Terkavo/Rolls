@@ -1,0 +1,21 @@
+.my-container {
+    width: 21cm;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.element {
+    width: 50%;
+    display: flex;
+}
+
+.qr {
+    width: 40%;
+}
+
+.data {
+    width: 60%;
+}
+.code-text{
+    text-align: center;
+}

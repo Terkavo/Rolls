@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="block-center-parent">
+        <div class="entering-code-container mt-1 block-center">
+            <div class="d-inline-block">R-</div>
+            <input [(ngModel)]="Value" class="form-control d-inline-block" autofocus #mainInput
+                (blur)="!IsLoaded ? mainInput.focus(): null" (keyup)="onKeyupMainInput($event)">
+            <button type="button" class="btn btn-secondary" (click)="IsScannerBeingUsed = true">
+                <i class="bi bi-qr-code-scan"></i>
+            </button><br>
+            <button type="button" class="btn btn-primary" (click)="getRoll()">Загрузить</button>
+            <div class="alert alert-danger" *ngIf="!IsLoaded&&IsRollNotFiend">Не найденно</div>
+            <div class="alert alert-success" *ngIf="IsSuccessfullySaved">Успешно Сохраненно</div>
+            <div *ngIf="IsLoaded">
+                <div class="alert alert-warning" *ngIf="Batch!.Rolls[0].IsUsedUp===true">Этот рулон уже отмечен как
+                    израсходованный</div>
+                <div>{{Batch!.Rolls[0].Id}}</div>
+                <div> {{Batch!.DateArrival}}</div>
+                <div> {{Batch!.Name}}</div>
+                <div> {{Batch!.Provider}}</div>
+                <div>{{Batch!.Rolls[0].Quantity}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-qr-scanner *ngIf="IsScannerBeingUsed" (CancelingScan)="IsScannerBeingUsed=false" (Scanned)="onQrScanned($event)">
+</app-qr-scanner>

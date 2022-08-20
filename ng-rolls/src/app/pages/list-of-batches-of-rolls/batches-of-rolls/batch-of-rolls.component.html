@@ -1,0 +1,25 @@
+<div class="my-container border border-dark rounded" #myСontainer>
+    <div class="loading" *ngIf="!IsReadyForRendering;else content">
+        <div class="spinner"></div>
+    </div>
+    <ng-template #content>
+        <div class="header">
+            <div class="d-flex flex-wrap">
+                <div class="m-1 fs-2 d-inline-block"><b>{{Batch.Id}}</b> </div>
+                <div class="m-1 d-inline-block"><b>{{Batch.DateOfCreation | date:'MM.dd.yy H:mm'}}</b></div>
+            </div>
+            <div class="">
+                <div class="m-1">Дата прихода <b>{{Batch.DateArrival}}</b></div>
+                <div class="m-1">Поставщик <b>{{Batch.Provider}}</b></div>
+                <div class="m-1">Наименнование <b>{{Batch.Name}}</b></div>
+                <div class="m-1">Количество Рулонов <b>{{Batch.Rolls.length}}</b> </div>
+            </div>
+            <div *ngFor="let item of Batch.Rolls;let i=index">
+                {{item.Id}}){{item.Quantity}}
+            </div>
+        </div>
+        <div class="d-flex flex-wrap">
+            <button class="btn btn-primary m-1" (click)="onPrintTag()">Печать бирок</button>
+        </div>
+    </ng-template>
+</div>

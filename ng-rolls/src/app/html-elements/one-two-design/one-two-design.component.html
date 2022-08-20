@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="loading" *ngIf="!IsReadyForRendering;else content">
+        <div class="spinner"></div>
+    </div>
+    <ng-template #content>
+        <div class="d-flex">
+            <div *ngIf="!IsHiddenLeftBlock" class="block">
+                <ng-container *ngTemplateOutlet="LeftBlockHtml"></ng-container>
+            </div>
+            <div class="block" *ngIf="!IsHiddenRightBlock">
+                <i class="bi bi-x-octagon" routerLink="/list-of-batches-of-rolls"></i>
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </ng-template>
+</div>

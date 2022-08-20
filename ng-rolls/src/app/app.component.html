@@ -1,0 +1,12 @@
+<app-authorization *ngIf="!AuthS.isAuthorization;else coontent"></app-authorization>
+<ng-template #coontent>
+    <div class="loading" *ngIf="!IsReadyForRendering;else content">
+        <div class="spinner"></div>
+    </div>
+    <ng-template #content>
+    <div class="content">
+        <app-header></app-header>
+        <router-outlet></router-outlet>
+    </div>
+</ng-template>
+<app-printer></app-printer>

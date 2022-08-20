@@ -1,0 +1,8 @@
+<div class="container">
+    <app-rool-loader (uploaded)="Batch=$event" (badlyUploaded)="Batch=null"
+        [ThrowOffEvent]="ThrowOffEvent.asObservable()"></app-rool-loader>
+    <div class="content d-flex" *ngIf="Batch!==null&&!Batch!.Rolls[0].IsUsedUp===true">
+        <button type="button" class="btn btn-primary mx-auto" (click)="SetRollLocation()">Cообщить что рулон
+            израсходован</button>
+    </div>
+</div>

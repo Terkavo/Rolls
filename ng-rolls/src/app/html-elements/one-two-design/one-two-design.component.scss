@@ -1,0 +1,20 @@
+.bi-x-octagon {
+    font-size: 1.3rem;
+    text-align: center;
+    display: none;
+
+    &:hover {
+        background: #86b7ff;
+    }
+    @media (max-width: 767.98px) {
+        display: block;
+    }
+}
+
+.block {
+    width: 50%;
+
+    @media (max-width: 767.98px) {
+        width: 100%;
+    }
+}

@@ -1,0 +1,13 @@
+.content {
+    @media print {
+        display: none;
+    }
+}
+
+app-printer {
+    display: none;
+
+    @media print {
+        display: block;
+    }
+}

@@ -1,0 +1,12 @@
+<div class="container">
+    <app-rool-loader (uploaded)="Batch=$event" (badlyUploaded)="Batch=null"
+        [ThrowOffEvent]="ThrowOffEvent.asObservable()"></app-rool-loader>
+    <div class="content" *ngIf="Batch!==null">
+        <div class="alert alert-warning" *ngIf="Batch!==null&&Batch!.Rolls[0].Location!==null">
+            местоположение данного рулона уже указанно как:{{Batch!.Rolls[0].Location}}, но вы можете изменить его
+            местоположение</div>
+        <app-datalist [Optuons]="Locations" (myInput)="LocationEvent=$event"></app-datalist>
+        <button type="button" class="btn btn-primary" (click)="SetRollLocation()"
+            [disabled]="!LocationEvent.IsCorrect">Указать местоположение</button>
+    </div>
+</div>

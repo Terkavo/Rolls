@@ -1,0 +1,15 @@
+<div class="container">
+    <app-rool-loader (uploaded)="Batch=$event" (badlyUploaded)="Batch=null"
+        [ThrowOffEvent]="ThrowOffEvent.asObservable()"></app-rool-loader>
+    <div class="content d-flex" *ngIf="Batch!==null">
+        <div class="w-50">
+            <button type="button" class="btn btn-primary " (click)="SetRollLocation()">Перенести в склад</button>
+        </div>
+        <div class="line-left"></div>
+        <div class="line-right"></div>
+        <div class="w-50">
+            <input [(ngModel)]="RecipientsName" class="form-control d-inline-block ">
+            <button type="button" class="btn btn-primary mx-auto" (click)="SendToOtherPeople()">Перенести другим людям</button>
+        </div>
+    </div>
+</div>

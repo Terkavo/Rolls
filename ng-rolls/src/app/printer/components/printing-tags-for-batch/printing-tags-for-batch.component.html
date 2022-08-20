@@ -1,0 +1,15 @@
+<div class="my-container">
+    <div *ngFor="let item of Service.Batch.Rolls" class="element">
+        <div class="data">
+            <div class="data mx-auto">{{Service.Batch.DateArrival}}</div>
+            <div class="flex-break"></div>
+            <div class="value mx-3">{{Service.Batch.Provider}}</div>
+            <div class="value mx-3">{{Service.Batch.Name}}</div>
+            <div class="value mx-3">{{item.Quantity}}</div>
+        </div>
+        <div class="qr">
+            <app-qr [Value]="item.Id"></app-qr>
+            <div class="code-text">{{item.Id}}</div>
+        </div>
+    </div>
+</div>

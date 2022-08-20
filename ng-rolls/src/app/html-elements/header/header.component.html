@@ -1,0 +1,7 @@
+<div class="my-container ">
+    <div class="are-you-here-text mx-2 text-break">{{service.Item}}</div>
+    <div (click)="service.EventsSubjectReboot.next();" *ngIf="service.IsResetButton">
+        <h4>Обновить</h4>
+    </div>
+    <div routerLink="" class="home-page">Домашняя страница</div>
+</div>  

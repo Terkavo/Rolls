@@ -67,7 +67,8 @@ export class BatchesOfRolls {
   //info
   Provider: string;
   Name: string;
-  Collor: string;
+  Color: string;
+  Material: string;
   Comment: string;
   ToClass() {
     this.Rolls = plainToInstance(Roll, this.Rolls)
@@ -110,8 +111,9 @@ export class AutonomousRoll {
   DateOfCreation: string
   Provider: string
   Name: string
-  Collor: string
+  Color: string
   Comment: string
+  Material: string;
   constructor(batches: BatchesOfRolls, roll: Roll) {
     this.Id = roll.Id
     this.Quantity = roll.Quantity
@@ -124,8 +126,9 @@ export class AutonomousRoll {
     this.DateOfCreation = batches.DateOfCreation
     this.Provider = batches.Provider
     this.Name = batches.Name
-    this.Collor = batches.Collor
+    this.Color = batches.Color
     this.Comment = batches.Comment
+    this.Material = batches.Material
   }
 
   Status(): RollStatus {

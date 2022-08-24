@@ -6,6 +6,8 @@ import { HttpService } from '../http/http.service';
 })
 export class AuthorizationService {
   isAuthorization: boolean = false
+  FullAccess: boolean = false
+  CanSetRollIsUsedUp: boolean = false
   get Token() {
     let token = getCookie('token');
     if (token == undefined) {
@@ -34,7 +36,9 @@ export class AuthorizationService {
     this.http.SendGet("Authorization/UpdateToken")
       .subscribe({
         next(res: any) {
-          th.SetToken(res.token)
+           th.SetToken(res.Token)
+          th.FullAccess=res.FullAccess
+          th.CanSetRollIsUsedUp=res.CanSetRollIsUsedUp
         },
         error(err) {
           if (err.status === 401)

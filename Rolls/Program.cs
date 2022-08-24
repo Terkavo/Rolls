@@ -1,3 +1,5 @@
+using MongoDB.Bson.Serialization;
+using Rolls.Models;
 using Rolls.Models.Rolls;
 using Rolls.Mongo;
 
@@ -10,7 +12,7 @@ namespace Rolls
         {
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Development")
                 ConnectionString=args[0];
-            BeforeTheStart();
+            BeforeTheStart().Wait();
             CreateHostBuilder().Build().Run();
         }
 
@@ -20,10 +22,15 @@ namespace Rolls
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-        private static void BeforeTheStart()
+        private static async Task BeforeTheStart()
         {
+            BsonSerializer.RegisterSerializer(typeof(DateTime), new MyMongoDBDateTimeSerializer());
             ProdgectInfo.Collection=MyMongo.ProdgectInfoCollection;
             BatchRolls.Collection=MyMongo.BatchRollsCollection;
+            Counterparties.Collection=MyMongo.CounterpartiesCollection;
+            MyUser.Collection=MyMongo.UsersCollection;
+           LogElement.Collection=MyMongo.LogsCollection;
+            await Counterparties.OnStartAsync();
         }
     }
 }

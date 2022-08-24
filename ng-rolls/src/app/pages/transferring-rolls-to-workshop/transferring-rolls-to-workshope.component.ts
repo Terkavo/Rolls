@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/internal/Subject';
+import { MyDataListInputEvent } from 'src/app/html-elements/datalist/datalist-companent/datalist.component';
 import { HeaderService } from 'src/app/html-elements/header/header.service';
 import { HttpService } from 'src/app/http/http.service';
-import { BatchesOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
+import { AutonomousRoll, BatchesOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 
 @Component({
   selector: 'app-transferring-rolls-to-workshop',
@@ -11,27 +12,34 @@ import { BatchesOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-r
 })
 export class TransferringRollsToWorkshopComponent implements OnInit {
   ThrowOffEvent: Subject<void> = new Subject<void>();
-  Batch: BatchesOfRolls | null = null;
-  RecipientsName: string = "";
+  Roll: AutonomousRoll | null = null;
+  Counterparties: string[]
+  CounterpartyEvent: MyDataListInputEvent;
   constructor(private header: HeaderService, private http: HttpService) { }
 
   ngOnInit(): void {
     this.header.Item = "Перенос рулонов в цех"
+    let th = this
+    this.http.SendGet(`Main/GetCounterparty/Out`).subscribe({
+      next(value) {
+        th.Counterparties = value as string[]
+      },
+    })
   }
   SetRollLocation() {
     let th = this
-    this.http.SendGet(`Main/TransferringRollsToWarehouse/${this.Batch!.Rolls[0].Id}`).subscribe({
+    this.http.SendGet(`Main/TransferringRollsToWarehouse/${this.Roll!.Id}`).subscribe({
       next() {
-        th.Batch = null;
+        th.Roll = null;
         th.ThrowOffEvent.next();
       },
     })
   }
-  SendToOtherPeople(){
+  SendToCounterparty() {
     let th = this
-    this.http.SendGet(`Main/TransferringRollsToOtherPeople/${this.Batch!.Rolls[0].Id}/${this.RecipientsName}`).subscribe({
+    this.http.SendGet(`Main/TransferringRollsToCounterparty/${this.Roll!.Id}/${this.CounterpartyEvent.Value}`).subscribe({
       next() {
-        th.Batch = null;
+        th.Roll = null;
         th.ThrowOffEvent.next();
       },
     })

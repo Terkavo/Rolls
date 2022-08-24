@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { DataListOptions, MyDataListInputEvent } from 'src/app/html-elements/datalist/datalist-companent/datalist.component';
 import { HeaderService } from 'src/app/html-elements/header/header.service';
 import { HttpService } from 'src/app/http/http.service';
-import { BatchesOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
+import { AutonomousRoll, BatchesOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 
 @Component({
   selector: 'app-specify-storage-cell',
@@ -13,10 +13,10 @@ import { BatchesOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-r
 })
 export class SpecifyStorageCellComponent implements OnInit {
   ThrowOffEvent: Subject<void> = new Subject<void>();
-  Batch: BatchesOfRolls | null = null;
+  Roll: AutonomousRoll | null = null;
   LocationEvent: MyDataListInputEvent;
-  Locations: string[] = ["1.1", "1.2", "1.3", "2.1", "2.2", "2.3", "3.1", "3.2", "3.3", "4", "4.1", "4.2","4.3", "5", "стеллаж",
-   "на полу"];
+  Locations: string[] = ["1.1", "1.2", "1.3", "2.1", "2.2", "2.3", "3.1", "3.2", "3.3", "4", "4.1", "4.2", "4.3", "5", "стеллаж",
+    "на полу"];
 
   constructor(private header: HeaderService, private http: HttpService) { }
 
@@ -25,9 +25,9 @@ export class SpecifyStorageCellComponent implements OnInit {
   }
   SetRollLocation() {
     let th = this
-    this.http.SendGet(`Main/SetRollLocation/${this.Batch!.Rolls[0].Id}/${this.LocationEvent.Value}`).subscribe({
-      next(value) {
-        th.Batch = null;
+    this.http.SendGet(`Main/SetRollLocation/${this.Roll!.Id}/${this.LocationEvent.Value}`).subscribe({
+      next() {
+        th.Roll = null;
         th.ThrowOffEvent.next();
       },
     })

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rolls.Models;
 using Rolls.Models.Rolls;
 using System;
 
@@ -10,16 +11,29 @@ namespace Rolls.Controllers.Api
     [Authorize]
     public class Main : ControllerBase
     {
+
+        public string login
+        {
+            get
+            {
+                return User.FindFirst(c => c.Type == "Login").Value;
+            }
+        }
+
+        [Authorize(Policy = "FullAccess")]
         [HttpPost]
         public async Task<IActionResult> SaveBatchRolls([FromBody] BatchRolls batchRolls)
         {
-            await batchRolls.SaveOnMongo();
+            await batchRolls.SaveOnMongo(login);
             return Ok(new { batchRolls.Id });
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetBatchesOfRolls()
         {
-            return Ok(AuxiliaryClass.GoodJson(await BatchRolls.UploadList()));
+            var list = await BatchRolls.UploadList();
+            list.Reverse();
+            return Ok(AuxiliaryClass.GoodJson(list));
         }
 
         [HttpGet("{id}")]
@@ -35,6 +49,7 @@ namespace Rolls.Controllers.Api
             }
         }
 
+        [Authorize(Policy = "FullAccess")]
         [HttpGet("{id}/{location}")]
         public async Task<IActionResult> SetRollLocation(string id, string location)
         {
@@ -42,33 +57,47 @@ namespace Rolls.Controllers.Api
             return Ok();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllRolls()
-        {
-
-            return Ok(AuxiliaryClass.GoodJson(await BatchRolls.UploadList()));
-
-        }
+        [Authorize(Policy = "FullAccess")]
         [HttpGet("{id}")]
         public async Task<IActionResult> TransferringRollsToWarehouse(string id)
         {
-            await BatchRolls.TransferringRollsToWarehouse(id);
+            await BatchRolls.TransferringRollsToWarehouse(id,login);
             return Ok();
         }
 
+        [Authorize(Policy = "FullAccess")]
         [HttpGet("{id}/{location}")]
-        public async Task<IActionResult> TransferringRollsToOtherPeople(string id, string location)
+        public async Task<IActionResult> TransferringRollsToCounterparty(string id, string location)
         {
-            await BatchRolls.TransferringRollsToOtherPeople(id, location);
+            await BatchRolls.TransferringRollsToCounterparty(id, location,login);
             return Ok();
         }
-
+        [Authorize(Policy = "CanSetRollIsUsedUp")]
         [HttpGet("{id}")]
         public async Task<IActionResult> ReportThatRollIsUsedUp(string id)
         {
-            await BatchRolls.ReportThatRollIsUsedUp(id);
+            await BatchRolls.ReportThatRollIsUsedUp(id,login);
             return Ok();
         }
 
+        [Authorize(Policy = "FullAccess")]
+        [HttpGet("{type}/{title}")]
+        public async Task<IActionResult> AddCounterparty(string type, string title)
+        {
+            await Counterparties.AddCounterparty(type, title);
+            return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCounterparties()
+        {
+            return Ok(AuxiliaryClass.GoodJson(await Counterparties.GetAllCounterparties()));
+        }
+
+        [HttpGet("{type}")]
+        public async Task<IActionResult> GetCounterparty(string type)
+        {
+            return Ok(AuxiliaryClass.GoodJson(await Counterparties.GetCounterparty(type)));
+        }
     }
 }

@@ -5,35 +5,36 @@ using System.Security.Claims;
 
 namespace Rolls.Mongo
 {
-    public class MyUser
+    public class MyUser : Downloadable<MyUser>
     {
         [BsonId]
         public BsonObjectId Id { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
+        public bool FullAccess { get; set; }
+        public bool CanSetRollIsUsedUp { get; set; }
         internal List<Claim> Claims
         {
             get
             {
-                return new List<Claim>() { new Claim(ClaimsIdentity.DefaultNameClaimType, Login) };
+                return new List<Claim>() { new Claim("Login", Login) };
             }
         }
-        public static async Task<MyUser> UploadAsync(string login, string password)
+        public static async Task<MyUser> UploadByLogin(string login)
+        {
+            var filter = new BsonDocument("Login", login);
+            MyUser user = await Upload(filter);
+            return user;
+        }
+        public static async Task<MyUser> Upload(string login, string password)
         {
             var filter = new BsonDocument("$and",
                 new BsonArray{
                 new BsonDocument("Login",login),
                 new BsonDocument("Password", password),
             });
-            List<MyUser> list = await UploadListUserAsync(filter);
-            if (list.Count==0)
-                throw new Exception("NotFound");
-            return list[0];
-        }
-        public static async Task<List<MyUser>> UploadListUserAsync(BsonDocument bson)
-        {
-            var res = await MyMongo.UsersCollection.FindAsync<MyUser>(bson);
-            return res.ToList();
+            MyUser user = await Upload(filter);
+            return user;
         }
     }
 }

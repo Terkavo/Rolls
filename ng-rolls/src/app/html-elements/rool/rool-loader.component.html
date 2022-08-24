@@ -11,13 +11,16 @@
             <div class="alert alert-danger" *ngIf="!IsLoaded&&IsRollNotFiend">Не найденно</div>
             <div class="alert alert-success" *ngIf="IsSuccessfullySaved">Успешно Сохраненно</div>
             <div *ngIf="IsLoaded">
-                <div class="alert alert-warning" *ngIf="Batch!.Rolls[0].IsUsedUp===true">Этот рулон уже отмечен как
+                <div class="alert alert-warning" *ngIf="Roll!.IsUsedUp===true">Этот рулон уже отмечен как
                     израсходованный</div>
-                <div>{{Batch!.Rolls[0].Id}}</div>
-                <div> {{Batch!.DateArrival}}</div>
-                <div> {{Batch!.Name}}</div>
-                <div> {{Batch!.Provider}}</div>
-                <div>{{Batch!.Rolls[0].Quantity}}</div>
+                <div>{{Roll!.Id}}</div>
+                <div> {{Roll!.DateArrival}}</div>
+                <div> {{Roll!.Name}}</div>
+                <div> {{Roll!.Provider}}</div>
+                <div> {{Roll!.Comment}}</div>
+                <div> {{Roll!.Color}}</div>
+                <div> {{Roll!.Material}}</div>
+                <div>{{Roll!.Quantity}}</div>
             </div>
         </div>
     </div>

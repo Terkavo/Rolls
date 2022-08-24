@@ -19,7 +19,7 @@ namespace Rolls.Controllers.Api
             MyUser identity;
             try
             {
-                identity =await MyUser.UploadAsync(obj.Login, obj.Password);
+                identity =await MyUser.Upload(obj.Login, obj.Password);
             }
             catch
             {
@@ -33,16 +33,19 @@ namespace Rolls.Controllers.Api
                 expires: now.Add(TimeSpan.FromDays(AuthOptions.LIFETIMEDAY)),
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-            return Ok(new
+            return Ok(AuxiliaryClass.GoodJson(new
             {
                 Token = encodedJwt,
-            });
+                identity.FullAccess,
+                identity.CanSetRollIsUsedUp,
+            }));
         }
         [HttpGet()]
         [Route("UpdateToken")]
         [Authorize]
-        public IActionResult UpdateToken()
+        public async Task<IActionResult> UpdateToken()
         {
+            MyUser user = await MyUser.UploadByLogin(User.FindFirst(c => c.Type == "Login").Value);
             var now = DateTime.UtcNow;
             var jwt = new JwtSecurityToken(
                 notBefore: now,
@@ -50,10 +53,12 @@ namespace Rolls.Controllers.Api
                 expires: now.Add(TimeSpan.FromDays(AuthOptions.LIFETIMEDAY)),
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-            return Ok(new
+            return Ok(AuxiliaryClass.GoodJson(new
             {
                 Token = encodedJwt,
-            });
+                user.FullAccess,
+                user.CanSetRollIsUsedUp,
+            }));
         }
     }
 

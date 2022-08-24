@@ -13,7 +13,7 @@ export class ListOfRollsService {
   Upload(): Observable<void> {
     let th = this
     return new Observable(observer => {
-      this.http.SendGet("Main/GetAllRolls").subscribe({
+      this.http.SendGet("Main/GetBatchesOfRolls").subscribe({
         next(value) {
           let batches = plainToInstance(BatchesOfRolls, value as Array<any>)
           batches.forEach(element => {

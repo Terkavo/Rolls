@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HeaderService } from 'src/app/html-elements/header/header.service';
 import { HttpService } from 'src/app/http/http.service';
-import { BatchesOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
+import { AutonomousRoll, BatchesOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 
 @Component({
   selector: 'app-report-that-roll-is-used-up',
@@ -12,7 +12,7 @@ import { BatchesOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-r
 export class ReportThatRollIsUsedUpComponent implements OnInit {
 
   ThrowOffEvent: Subject<void> = new Subject<void>();
-  Batch: BatchesOfRolls | null = null;
+  Roll: AutonomousRoll | null = null;
 
   constructor(private header: HeaderService, private http: HttpService) { }
 
@@ -21,9 +21,9 @@ export class ReportThatRollIsUsedUpComponent implements OnInit {
   }
   SetRollLocation() {
     let th = this
-    this.http.SendGet(`Main/ReportThatRollIsUsedUp/${this.Batch!.Rolls[0].Id}`).subscribe({
+    this.http.SendGet(`Main/ReportThatRollIsUsedUp/${this.Roll!.Id}`).subscribe({
       next() {
-        th.Batch = null;
+        th.Roll = null;
         th.ThrowOffEvent.next();
       },
     })

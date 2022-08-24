@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { plainToInstance } from 'class-transformer';
 import { Observable } from 'rxjs';
 import { HttpService } from 'src/app/http/http.service';
-import { BatchesOfRolls } from 'src/app/pages/list-of-batches-of-rolls/list-of-batches-of-rolls.service';
+import { AutonomousRoll, BatchesOfRolls } from 'src/app/pages/list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 
 @Component({
   selector: 'app-rool-loader',
@@ -19,7 +19,7 @@ export class RoolLoaderComponent implements OnInit {
     value = value.replace("К-", "");
     this._Value = value;
   }
-  Batch: BatchesOfRolls | null = null;
+  Roll: AutonomousRoll | null = null;
   Location: string = "";
 
   IsRollNotFiend: boolean = false;
@@ -28,7 +28,7 @@ export class RoolLoaderComponent implements OnInit {
   IsSuccessfullySaved: boolean = false;
   IsLoaded: boolean = false;
 
-  @Output("uploaded") UploadedEvent = new EventEmitter<BatchesOfRolls>();
+  @Output("uploaded") UploadedEvent = new EventEmitter<AutonomousRoll>();
   @Output("badlyUploaded") BadlyUploadedEvent = new EventEmitter<void>();
 
   @Input() ThrowOffEvent: Observable<void> | undefined;
@@ -56,13 +56,13 @@ export class RoolLoaderComponent implements OnInit {
         th.IsLoaded = true
         let batch = plainToInstance(BatchesOfRolls, value)
         batch.ToClass()
-        th.Batch = batch;
-        th.UploadedEvent.emit(batch)
+        th.Roll = batch.GetAutonomousRoll()[0];
+        th.UploadedEvent.emit(th.Roll)
         th.IsSuccessfullySaved = false;
       },
       error(err: any) {
         if (err.status === 404) {
-          th.Batch = null;
+          th.Roll = null;
           th.IsLoaded = false;
           th.IsRollNotFiend = true;
           th.BadlyUploadedEvent.emit()

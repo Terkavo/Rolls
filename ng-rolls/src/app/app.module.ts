@@ -29,6 +29,7 @@ import { RoolLoaderComponent } from './html-elements/rool/rool-loader.component'
 import { TransferringRollsToWorkshopComponent } from './pages/transferring-rolls-to-workshop/transferring-rolls-to-workshope.component';
 import { ReportThatRollIsUsedUpComponent } from './pages/report-that-roll-is-used-up/report-that-roll-is-used-up.component';
 import { HtmlForDirective } from './Directive/html-for.directive';
+import { ListOfCounterpartiesComponent } from './pages/list-of-counterparties/list-of-counterparties.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { HtmlForDirective } from './Directive/html-for.directive';
     TransferringRollsToWorkshopComponent,
     ReportThatRollIsUsedUpComponent,
     HtmlForDirective,
+    ListOfCounterpartiesComponent,
   ],
   imports: [
     FormsModule,

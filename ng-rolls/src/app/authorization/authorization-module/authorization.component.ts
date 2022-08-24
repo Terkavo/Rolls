@@ -22,7 +22,9 @@ export class AuthorizationComponent implements OnInit {
     let th = this
     strim.subscribe({
       next(res: any) {
-        th.auth.SetToken(res.token)
+        th.auth.SetToken(res.Token)
+        th.auth.FullAccess=res.FullAccess
+        th.auth.CanSetRollIsUsedUp=res.CanSetRollIsUsedUp
       },
       error(err: HttpErrorResponse) {
         if (err.error.errorText == "Invalid username or password.")

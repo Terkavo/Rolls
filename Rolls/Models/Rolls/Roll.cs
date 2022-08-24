@@ -8,6 +8,5 @@
         public string CounterpartyOwner { get; set; }
         public bool IsInWorkshop { get; set; }
         public bool IsUsedUp { get; set; }
-
     }
 }

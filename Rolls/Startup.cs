@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.WebEncoders;
 using Microsoft.IdentityModel.Tokens;
 using Rolls.Auxiliary.AntiBruteforce;
+using Rolls.Controllers.Outh;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
@@ -14,7 +16,7 @@ namespace Rolls
             Configuration = configuration;
         }
         public IConfiguration Configuration { get; }
-        public void Configure(IApplicationBuilder app,ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app, ILogger<Startup> logger)
         {
             app.UseMiddleware<AntiBruteforceMiddleware>();
             app.UseStaticFiles(new StaticFileOptions()
@@ -61,6 +63,7 @@ namespace Rolls
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
             })
             .AddJwtBearer(x =>
             {
@@ -75,6 +78,15 @@ namespace Rolls
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero,
                 };
+            });
+            services.AddTransient<IAuthorizationHandler, FullAccessHandler>();
+            services.AddTransient<IAuthorizationHandler, CanSetRollIsUsedUpHandler>();
+            services.AddAuthorization(x =>
+            {
+                x.AddPolicy("FullAccess",
+                    policy => policy.Requirements.Add(new FullAccessPlug()));
+                x.AddPolicy("CanSetRollIsUsedUp",
+                    policy => policy.Requirements.Add(new CanSetRollIsUsedUpPlug()));
             });
             services.AddCors(options =>
                 options.AddDefaultPolicy(builder =>

@@ -4,6 +4,7 @@ import { MyDataListInputEvent } from 'src/app/html-elements/datalist/datalist-co
 import { HeaderService } from 'src/app/html-elements/header/header.service';
 import { HttpService } from 'src/app/http/http.service';
 import { Roll } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
+import { ICounterparties as IListOfProperties } from '../list-of-counterparties/list-of-counterparties.component';
 
 @Component({
   selector: 'app-add-roll',
@@ -14,20 +15,31 @@ export class AddRollComponent implements OnInit {
   QuantityRoll: number = 0;
   Rolls: Roll[] = new Array()
   DateArrival: Date = new Date();
-  Provider: string = "";
   Name: string = "";
   Comment: string = "";
-  CollorEvent: MyDataListInputEvent;
+
+  ProviderEvent: MyDataListInputEvent;
+  ColorEvent: MyDataListInputEvent;
   UnitOfMeasurementEvent: MyDataListInputEvent;
-  Collors: string[] = ["бордо", "бургундия", "другое", "вас/вас", "вас/плащ", "вас/сер", "вас/чер", "василёк", "голубой",
-    "красн/лок", "красн/чер(малина)", "красный", "лимон", "олива", "оранж", "оранж/черный", "портвейн", "серый", "синий",
-    "тёмно синий", "тёмносиний", "черный", "коричневый", "прозрачная", "портвейн", "хаки", "синий", "василек", "василек светлый",
-    "асилек темный", "белый", "белый оптик", "графит-меланж", "медный(терракот)"];
+  MaterialEvent: MyDataListInputEvent;
+  ListOfProperties: IListOfProperties[] = new Array();
   UnitsOfMeasurement: string[] = ["м.п", "м.кв", "кг", "шт"]
   constructor(private http: HttpService, public Header: HeaderService, private router: Router) {
   }
   ngOnInit(): void {
     this.Header.Item = "Добавить рулоны"
+    let th = this
+    this.http.SendGet(`Main/GetCounterparties`).subscribe({
+      next(value) {
+        th.ListOfProperties = value as IListOfProperties[]
+      },
+    })
+  }
+  GetListOfProperties(value: string): string[] {
+    let val = this.ListOfProperties.find(x => x.Type === value)
+    if (val === undefined)
+      return new Array()
+    return val.ListCounterparties
   }
   OnInputQuantityRoll(quantity: string): void {
     let quantityRoll = Number.parseInt(quantity);
@@ -65,21 +77,20 @@ export class AddRollComponent implements OnInit {
       },
     })
   }
-
   CalculationOfRolls() {
     let res = 0
     this.Rolls.forEach(x => res += Number.parseInt(x.Quantity))
     return res
   }
-
-  toJSON() {
+   toJSON() {
     return {
       Rolls: this.Rolls,
       DateArrival: this.DateArrival,
-      Provider: this.Provider,
+      Provider: this.ProviderEvent.Value,
       Name: this.Name,
-      Collor: this.CollorEvent,
+      Color: this.ColorEvent.Value,
       Comment: this.Comment,
+      Material: this.MaterialEvent.Value,
     }
   }
 }

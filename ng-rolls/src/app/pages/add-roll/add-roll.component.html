@@ -11,11 +11,17 @@
     </div>
     <div class="mb-3 border col-md-6 col-sm-12">
       <label class="form-label">Поставщик</label>
-      <textarea class="form-control" rows="1" [(ngModel)]="Provider"></textarea>
+      <app-datalist [Optuons]="GetListOfProperties('In')" (myInput)="ProviderEvent=$event">
+      </app-datalist>
     </div>
     <div class="mb-3 border col-md-4">
       <label class="form-label">Цвет</label>
-      <app-datalist [Optuons]="Collors" (myInput)="CollorEvent=$event"></app-datalist>
+      <app-datalist [Optuons]="GetListOfProperties('Colors')" (myInput)="ColorEvent=$event">
+      </app-datalist>
+    </div>
+    <div class="mb-3 border col-md-4">
+      <label class="form-label">Материал</label>
+      <app-datalist [Optuons]="GetListOfProperties('Materials')" (myInput)="MaterialEvent=$event"> </app-datalist>
     </div>
     <div class="mb-3 border col-12 col-md-4">
       <label class="form-label">Наименнование</label>
@@ -32,10 +38,11 @@
   </div>
   <div class="rolls">
     <app-roll *ngFor="let iterRoll of Rolls;let i=index" [Roll]="iterRoll" [Index]="i"></app-roll>
-    <div> Кол-во рулонов {{CalculationOfRolls()}}{{Comment}}</div>
+    <div> Кол-во рулонов {{CalculationOfRolls()}}{{UnitOfMeasurementEvent.Value}}</div>
   </div>
   <div class="container">
     <button type="button" class="btn btn-outline-primary" (click)="Save()"
-      [disabled]="!CollorEvent.IsCorrect||!UnitOfMeasurementEvent.IsCorrect||Rolls.length===0">Сохранить</button>
+      [disabled]="!ColorEvent.IsCorrect||!UnitOfMeasurementEvent.IsCorrect||Rolls.length===0||!ProviderEvent.IsCorrect">
+      Сохранить</button>
   </div>
 </div>

@@ -1,22 +1,26 @@
 <div class="container">
     <div class="row">
-        <div class="col-6 col-md-4 col-lg-3 cell" routerLink="add-roll">
+        <div class="col-6 col-md-4 col-lg-3 cell" routerLink="add-roll" *ngIf="Auth.FullAccess">
             <div class="text-center">Добавить рулоны</div>
         </div>
-        <div class="col-6 col-md-4 col-lg-3 cell" routerLink="list-of-batches-of-rolls">
+        <div class="col-6 col-md-4 col-lg-3 cell" routerLink="list-of-batches-of-rolls" *ngIf="Auth.FullAccess">
             <div class="text-center">Список пачек рулонов</div>
         </div>
-        <div class="col-6 col-md-4 col-lg-3 cell" routerLink="specify-storage-cell">
+        <div class="col-6 col-md-4 col-lg-3 cell" routerLink="specify-storage-cell" *ngIf="Auth.FullAccess">
             <div class="text-center">Указать ячейку хранения рулона</div>
         </div>
         <div class="col-6 col-md-4 col-lg-3 cell" routerLink="list-of-rolls">
             <div class="text-center">Список рулонов</div>
         </div>
-        <div class="col-6 col-md-4 col-lg-3 cell" routerLink="transferring-rolls-to-workshop">
+        <div class="col-6 col-md-4 col-lg-3 cell" routerLink="transferring-rolls-to-workshop" *ngIf="Auth.FullAccess">
             <div class="text-center">Перенос рулонов в цех</div>
         </div>
-        <div class="col-6 col-md-4 col-lg-3 cell" routerLink="report-that-roll-is-used-up">
+        <div class="col-6 col-md-4 col-lg-3 cell" routerLink="report-that-roll-is-used-up"
+            *ngIf="Auth.CanSetRollIsUsedUp||Auth.FullAccess">
             <div class="text-center">Cообщить что рулон израсходован</div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3 cell" routerLink="list-of-counterparties" *ngIf="Auth.FullAccess">
+            <div class="text-center">Редактирование: Контрагенты, Цвета, Материалы</div>
         </div>
     </div>
 </div>

@@ -9,23 +9,25 @@ import { BrowserMultiFormatReader, NotFoundException } from '@zxing/library';
 export class QrScannerComponent implements OnInit, OnDestroy {
   codeReader = new BrowserMultiFormatReader();
   @ViewChild('video') VideoHtml: ElementRef<HTMLVideoElement>
-  @ViewChild('select') Select: ElementRef<HTMLSelectElement>
+  @ViewChild('select') Select: ElementRef<HTMLSelectElement> | undefined
 
   @Output() CancelingScan = new EventEmitter<void>();
   @Output() Scanned = new EventEmitter<string>();
   VideoInputDevices: MediaDeviceInfo[] = new Array();
   ;
   constructor() { }
-  ngOnInit():void {
+  ngOnInit(): void {
+    navigator.mediaDevices.getUserMedia({video: true})
     setTimeout(async () => {
       this.VideoInputDevices = await this.codeReader.listVideoInputDevices()
       if (this.VideoInputDevices.length === 0)
         return
-        setTimeout(() => {
+      setTimeout(() => {
+        if (this.Select !== undefined)
           this.Select.nativeElement.value = this.VideoInputDevices[0].label
-          this.Start(this.VideoInputDevices[0])
-        });
-     
+        this.Start(this.VideoInputDevices[0])
+      });
+
     }, 10);
   }
   Start(device: MediaDeviceInfo) {

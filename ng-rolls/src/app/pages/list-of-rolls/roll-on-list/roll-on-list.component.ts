@@ -15,7 +15,6 @@ export class RollOnListComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
   GetLocation(): string {
     if (this.Roll.IsUsedUp)
       return "Израсходован";

@@ -6,13 +6,16 @@
         <div class="header">
             <div class="d-flex flex-wrap">
                 <div class="m-1 fs-2 d-inline-block"><b>{{Batch.Id}}</b> </div>
-                <div class="m-1 d-inline-block"><b>{{Batch.DateOfCreation | date:'MM.dd.yy H:mm'}}</b></div>
+                <div class="m-1 d-inline-block"><b>{{Batch.DateOfCreation | date:'dd.MM.yy H:mm'}}</b></div>
             </div>
             <div class="">
                 <div class="m-1">Дата прихода <b>{{Batch.DateArrival}}</b></div>
-                <div class="m-1">Поставщик <b>{{Batch.Provider}}</b></div>
-                <div class="m-1">Наименнование <b>{{Batch.Name}}</b></div>
+                <div class="m-1"> <b>{{Batch.Provider}}</b></div>
+                <div class="m-1"> <b>{{Batch.Name}}</b></div>
                 <div class="m-1">Количество Рулонов <b>{{Batch.Rolls.length}}</b> </div>
+                <div class="m-1"> <b>{{Batch.Color}}</b> </div>
+                <div class="m-1"> <b>{{Batch.Material}}</b> </div>
+                <div class="m-1" *ngIf="Batch.Comment!=''">Коментарий <b>{{Batch.Comment}}</b> </div>
             </div>
             <div *ngFor="let item of Batch.Rolls;let i=index">
                 {{item.Id}}){{item.Quantity}}

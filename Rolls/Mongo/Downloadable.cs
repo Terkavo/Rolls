@@ -1,7 +1,5 @@
-﻿using Rolls.Auxiliary;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
-using System.Diagnostics;
 
 namespace Rolls.Mongo
 {
@@ -18,11 +16,15 @@ namespace Rolls.Mongo
             FilterDefinition<T> filter = bson;
             return await UploadList(filter);
         }
-
         internal static async Task<List<T>> UploadList(FilterDefinition<T> bson)
         {
             var res = await Collection.FindAsync<T>(bson);
             return res.ToList();
+        }
+        internal static async Task<List<T>> UploadList(int quantity)
+        {
+            var res = Collection.Find(new BsonDocument()).Limit(quantity).Sort("{$natural: -1}");
+            return await res.ToListAsync();
         }
         internal static async Task<T> Upload(FilterDefinition<T> bson)
         {

@@ -30,6 +30,7 @@ import { TransferringRollsToWorkshopComponent } from './pages/transferring-rolls
 import { ReportThatRollIsUsedUpComponent } from './pages/report-that-roll-is-used-up/report-that-roll-is-used-up.component';
 import { HtmlForDirective } from './Directive/html-for.directive';
 import { ListOfCounterpartiesComponent } from './pages/list-of-counterparties/list-of-counterparties.component';
+import { LogsComponent } from './pages/logs/logs.component';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { ListOfCounterpartiesComponent } from './pages/list-of-counterparties/li
     ReportThatRollIsUsedUpComponent,
     HtmlForDirective,
     ListOfCounterpartiesComponent,
+    LogsComponent,
   ],
   imports: [
     FormsModule,

@@ -99,5 +99,10 @@ namespace Rolls.Controllers.Api
         {
             return Ok(AuxiliaryClass.GoodJson(await Counterparties.GetCounterparty(type)));
         }
+        [HttpGet()]
+        public async Task<IActionResult> GetLogs()
+        {
+            return Ok(AuxiliaryClass.GoodJson(await LogElement.UploadList(100)));
+        }
     }
 }

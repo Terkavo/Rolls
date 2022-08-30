@@ -36,12 +36,12 @@ export class AuthorizationService {
     this.http.SendGet("Authorization/UpdateToken")
       .subscribe({
         next(res: any) {
-           th.SetToken(res.Token)
-          th.FullAccess=res.FullAccess
-          th.CanSetRollIsUsedUp=res.CanSetRollIsUsedUp
+          th.SetToken(res.Token)
+          th.FullAccess = res.FullAccess
+          th.CanSetRollIsUsedUp = res.CanSetRollIsUsedUp
         },
         error(err) {
-          if (err.status === 401)
+          if (err.status === 401 || err.status === 500)
             th.isAuthorization = false;
         }
       })

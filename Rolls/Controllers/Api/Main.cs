@@ -28,12 +28,23 @@ namespace Rolls.Controllers.Api
             return Ok(new { batchRolls.Id });
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBatchOfRolls(string id)
+        {
+            return Ok(AuxiliaryClass.GoodJson(await BatchRolls.Upload(id)));
+        }
         [HttpGet]
         public async Task<IActionResult> GetBatchesOfRolls()
         {
             var list = await BatchRolls.UploadList();
             list.Reverse();
             return Ok(AuxiliaryClass.GoodJson(list));
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateBatchOfRolls([FromBody] BatchRolls batchRolls)
+        {
+           await batchRolls.UpdateBatchOfRolls(login);
+            return Ok();
         }
 
         [HttpGet("{id}")]
@@ -61,7 +72,7 @@ namespace Rolls.Controllers.Api
         [HttpGet("{id}")]
         public async Task<IActionResult> TransferringRollsToWarehouse(string id)
         {
-            await BatchRolls.TransferringRollsToWarehouse(id,login);
+            await BatchRolls.TransferringRollsToWarehouse(id, login);
             return Ok();
         }
 
@@ -69,14 +80,14 @@ namespace Rolls.Controllers.Api
         [HttpGet("{id}/{location}")]
         public async Task<IActionResult> TransferringRollsToCounterparty(string id, string location)
         {
-            await BatchRolls.TransferringRollsToCounterparty(id, location,login);
+            await BatchRolls.TransferringRollsToCounterparty(id, location, login);
             return Ok();
         }
         [Authorize(Policy = "CanSetRollIsUsedUp")]
         [HttpGet("{id}")]
         public async Task<IActionResult> ReportThatRollIsUsedUp(string id)
         {
-            await BatchRolls.ReportThatRollIsUsedUp(id,login);
+            await BatchRolls.ReportThatRollIsUsedUp(id, login);
             return Ok();
         }
 

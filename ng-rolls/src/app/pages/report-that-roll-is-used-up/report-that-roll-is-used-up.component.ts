@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HeaderService } from 'src/app/html-elements/header/header.service';
 import { HttpService } from 'src/app/http/http.service';
-import { AutonomousRoll, BatchesOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
+import { AutonomousRoll, BatchOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 
 @Component({
   selector: 'app-report-that-roll-is-used-up',
@@ -17,7 +17,7 @@ export class ReportThatRollIsUsedUpComponent implements OnInit {
   constructor(private header: HeaderService, private http: HttpService) { }
 
   ngOnInit(): void {
-    this.header.Item = "Cообщить что рулон израсходован"
+    this.header.SetItem("Cообщить что рулон израсходован")
   }
   SetRollLocation() {
     let th = this

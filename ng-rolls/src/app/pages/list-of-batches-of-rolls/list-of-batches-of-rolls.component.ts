@@ -14,7 +14,7 @@ export class ListOfBatchesOfRollsComponent implements OnInit {
   ReadyForRenderingEvent: Subject<void> = new Subject<void>();
 
   async ngOnInit(): Promise<void> {
-    this.header.Item = "Список пачек рулонов"
+    this.header.SetItem("Список пачек рулонов",()=>this.Service.Update());
     await this.Service.Update();
     this.ReadyForRenderingEvent.next();
   }

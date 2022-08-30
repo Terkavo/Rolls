@@ -3,7 +3,7 @@ import { Subject } from 'rxjs/internal/Subject';
 import { MyDataListInputEvent } from 'src/app/html-elements/datalist/datalist-companent/datalist.component';
 import { HeaderService } from 'src/app/html-elements/header/header.service';
 import { HttpService } from 'src/app/http/http.service';
-import { AutonomousRoll, BatchesOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
+import { AutonomousRoll, BatchOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 
 @Component({
   selector: 'app-transferring-rolls-to-workshop',
@@ -18,7 +18,7 @@ export class TransferringRollsToWorkshopComponent implements OnInit {
   constructor(private header: HeaderService, private http: HttpService) { }
 
   ngOnInit(): void {
-    this.header.Item = "Перенос рулонов в цех"
+    this.header.SetItem("Перенос рулонов в цех")
     let th = this
     this.http.SendGet(`Main/GetCounterparty/Out`).subscribe({
       next(value) {

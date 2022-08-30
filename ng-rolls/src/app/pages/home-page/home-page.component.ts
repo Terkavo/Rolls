@@ -11,7 +11,6 @@ import { AuthorizationService } from 'src/app/authorization/authorization.servic
 export class HomePageComponent implements OnInit {
   constructor(private rout: Router, private header: HeaderService,public Auth:AuthorizationService) { }
   ngOnInit(): void {
-    this.header.Item = "Главная";
-    this.header.IsResetButton = false;
+    this.header.SetItem("Главная")
   }
 }

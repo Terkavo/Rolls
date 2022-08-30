@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Roll } from '../../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
+import { Roll } from 'src/app/pages/list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 @Component({
   selector: 'app-roll',
   templateUrl: './roll.component.html',

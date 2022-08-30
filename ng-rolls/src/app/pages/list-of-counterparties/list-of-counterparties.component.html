@@ -5,13 +5,13 @@
     <label class="btn btn-outline-primary input-group-checkbox ww" appHtmlFor [appHtmlForInput]="cheak1">Приход Контрагенты</label>
     <input type="radio" class="btn-check" autocomplete="off" #cheak2 (change)="Type='Out'" name="Type">
     <label class="btn btn-outline-primary" for="btn-check-outlined" appHtmlFor [appHtmlForInput]="cheak2">Уход Контрагенты</label>
-    <input type="radio" class="btn-check" autocomplete="off" #cheak3 (change)="Type='Colors'" name="Type" checked>
+    <input type="radio" class="btn-check" autocomplete="off" #cheak3 (change)="Type='Colors'" name="Type">
     <label class="btn btn-outline-primary input-group-checkbox ww" appHtmlFor [appHtmlForInput]="cheak3">Цвета</label>
     <input type="radio" class="btn-check" autocomplete="off" #cheak4 (change)="Type='Materials'" name="Type">
     <label class="btn btn-outline-primary" for="btn-check-outlined" appHtmlFor [appHtmlForInput]="cheak4">Материалы</label>
     <div>
       <input class="form-control" [(ngModel)]="Title" />
-      <button type="button" class="btn btn-outline-primary" (click)="Add()">Добавить</button>
+      <button type="button" class="btn btn-outline-primary" (click)="Add()" [disabled]="Title===undefined||Title===''">Добавить</button>
     </div>
     <div *ngFor="let item of CurrentCounterparty.ListCounterparties">{{item}}</div>
   </div>

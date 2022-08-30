@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddRollComponent } from './pages/add-roll/add-roll.component';
+import { ChangeBathComponent } from './pages/change-bath/change-bath.component';
+
+import { CreateBathComponent } from './pages/create-bath/create-bath.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { BatchOfRollsComponent } from './pages/list-of-batches-of-rolls/batches-of-rolls/batch-of-rolls.component';
 import { ListOfBatchesOfRollsComponent } from './pages/list-of-batches-of-rolls/list-of-batches-of-rolls.component';
@@ -12,7 +14,8 @@ import { SpecifyStorageCellComponent } from './pages/specify-storage-cell/specif
 import { TransferringRollsToWorkshopComponent } from './pages/transferring-rolls-to-workshop/transferring-rolls-to-workshope.component';
 
 const routes: Routes = [{ path: "", component: HomePageComponent },
-{ path: "add-roll", component: AddRollComponent },
+{ path: "create-bath", component: CreateBathComponent },
+{ path: "change-bath/:id", component: ChangeBathComponent },
 {
   path: "list-of-batches-of-rolls", component: ListOfBatchesOfRollsComponent, children: [
     { path: ":id", component: BatchOfRollsComponent }],

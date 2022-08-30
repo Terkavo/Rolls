@@ -102,5 +102,17 @@ td {
 }
 .list-of-rolls-grid-container{
   display: grid;
-  grid-template-columns: 3em 1fr 1fr 1fr 1fr 1fr 7em 4em 1fr;
+  grid-template-columns: 3em 1fr 1fr 1fr 1fr 7em 4em 1fr;
+}
+
+@function calcFluidFontSize($f-min, $f-max, $v-min, $v-max) {
+  $k: ($f-max - $f-min)/($v-max - $v-min);
+  $b: $f-min - $k * $v-min;
+
+  $b: $b + rem;
+
+  @return calc( #{$k} * 100vw + #{$b} );
+}
+html {
+  font-size: calcFluidFontSize(0.7, 1, 30, 80);
 }

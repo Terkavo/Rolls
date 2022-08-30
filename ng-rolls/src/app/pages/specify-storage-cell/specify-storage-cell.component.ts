@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { DataListOptions, MyDataListInputEvent } from 'src/app/html-elements/datalist/datalist-companent/datalist.component';
 import { HeaderService } from 'src/app/html-elements/header/header.service';
 import { HttpService } from 'src/app/http/http.service';
-import { AutonomousRoll, BatchesOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
+import { AutonomousRoll, BatchOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 
 @Component({
   selector: 'app-specify-storage-cell',
@@ -21,7 +21,7 @@ export class SpecifyStorageCellComponent implements OnInit {
   constructor(private header: HeaderService, private http: HttpService) { }
 
   ngOnInit(): void {
-    this.header.Item = "Указывание ячейки хранения рулона"
+    this.header.SetItem("Указывание ячейки хранения рулона")
   }
   SetRollLocation() {
     let th = this

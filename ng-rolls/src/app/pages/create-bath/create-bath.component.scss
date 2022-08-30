@@ -1,0 +1,18 @@
+.header {
+    background-color: rgb(135 255 203);
+    font-size: 25px;
+}
+
+.container-imput-for-all {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.names {
+    font-weight: 600;
+    margin: auto 0.2rem
+}
+
+input {
+    max-width: 100%
+}

@@ -5,13 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RollComponent } from './pages/add-roll/roll/roll.component';
 import { DatalistComponent } from './html-elements/datalist/datalist-companent/datalist.component';
 import { DatalistItemComponent } from './html-elements/datalist/datalist-item/datalist-item.component';
 import { HeaderComponent } from './html-elements/header/header.component';
 import { AuthorizationComponent } from './authorization/authorization-module/authorization.component';
 import { PrinterComponent } from './printer/printer/printer.component';
-import { AddRollComponent } from './pages/add-roll/add-roll.component';
 import { HttpService } from './http/http.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -31,14 +29,16 @@ import { ReportThatRollIsUsedUpComponent } from './pages/report-that-roll-is-use
 import { HtmlForDirective } from './Directive/html-for.directive';
 import { ListOfCounterpartiesComponent } from './pages/list-of-counterparties/list-of-counterparties.component';
 import { LogsComponent } from './pages/logs/logs.component';
+import { CreateBathComponent } from './pages/create-bath/create-bath.component';
+import { ChangeBathComponent } from './pages/change-bath/change-bath.component';
+import { EditingBathComponent } from './html-elements/editing-bath/editing-bath.component';
+import { RollComponent } from './html-elements/editing-bath/roll/roll.component';
 
 
 @NgModule({
   declarations: [
     HomePageComponent,
     AppComponent,
-    AddRollComponent,
-    RollComponent,
     DatalistComponent,
     DatalistItemComponent,
     HeaderComponent,
@@ -59,6 +59,10 @@ import { LogsComponent } from './pages/logs/logs.component';
     HtmlForDirective,
     ListOfCounterpartiesComponent,
     LogsComponent,
+    CreateBathComponent,
+    ChangeBathComponent,
+    EditingBathComponent,
+    RollComponent
   ],
   imports: [
     FormsModule,

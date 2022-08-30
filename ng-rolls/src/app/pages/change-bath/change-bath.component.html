@@ -1,0 +1,4 @@
+<div class="spinner" *ngIf="!IsReadyForRendering;else content"></div>
+<ng-template #content>
+    <app-editing-bath [Batch]="Batch" (save)="onSave()" [IsChanges]="true"></app-editing-bath>
+</ng-template>

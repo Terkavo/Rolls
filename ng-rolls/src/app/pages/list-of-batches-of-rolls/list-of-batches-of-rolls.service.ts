@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ListOfBatchesOfRollsService {
 
-  Batches: BatchesOfRolls[] = new Array
+  Batches: BatchOfRolls[] = new Array
   private IsRequestExecuting: boolean = false
   private ObservableRequest: Observable<Object>
   constructor(private http: HttpService,) { }
@@ -17,7 +17,7 @@ export class ListOfBatchesOfRollsService {
       let th = this
       this.http.SendGet("Main/GetBatchesOfRolls").subscribe({
         next(value: any) {
-          let batches = plainToInstance(BatchesOfRolls, value as Array<any>)
+          let batches = plainToInstance(BatchOfRolls, value as Array<any>)
           batches.forEach(element => {
             element.ToClass();
           });
@@ -29,9 +29,9 @@ export class ListOfBatchesOfRollsService {
       this.IsRequestExecuting = true
     })
   }
-  async GetOnId(id: string): Promise<BatchesOfRolls> {
+  async GetOnId(id: string): Promise<BatchOfRolls> {
     let th = this
-    return new Promise<BatchesOfRolls>((resolve, reject) => {
+    return new Promise<BatchOfRolls>((resolve, reject) => {
       if (this.IsRequestExecuting)
         this.ObservableRequest.subscribe({
           complete() {
@@ -51,25 +51,24 @@ export class ListOfBatchesOfRollsService {
       }
     })
   }
-  private GetOnIdSync(id: string): BatchesOfRolls {
+  private GetOnIdSync(id: string): BatchOfRolls {
     let result = this.Batches.find(x => x.Id === id)
     if (result === undefined)
       throw new Error();
     return result
   }
 }
-export class BatchesOfRolls {
+export class BatchOfRolls {
   Id: string;
-  DateArrival: string;
-  DateOfCreation: string;
-  Rolls: Roll[];
+  DateArrival: string = "";
+  DateOfCreation: string = "";
+  Rolls: Roll[] = new Array;
 
   //info
-  Provider: string;
-  Name: string;
-  Color: string;
-  Material: string;
-  Comment: string;
+  Provider: string = "";
+  Color: string = "";
+  Material: string = "";
+  Comment: string = "";
   ToClass() {
     this.Rolls = plainToInstance(Roll, this.Rolls)
   }
@@ -80,11 +79,15 @@ export class BatchesOfRolls {
     });
     return arr;
   }
+  GetDateArrivalToInput() {
+    let arr = this.DateArrival.split(".")
+    return `${arr[2]}-${arr[1]}-${arr[0]}`
+  }
 }
 export class Roll {
   Id: string;
   Quantity: string;
-  Location: string | null = null;
+  CellInWarehouse: string | null = null;
   CounterpartyOwner: string | null = null;
   IsInWorkshop: boolean = false
   IsUsedUp: boolean | null = null
@@ -102,7 +105,7 @@ export class Roll {
 export class AutonomousRoll {
   Id: string;
   Quantity: string;
-  Location: string | null = null;
+  CellInWarehouse: string | null = null;
   CounterpartyOwner: string | null;
   IsInWorkshop: boolean;
   IsUsedUp: boolean | null = null
@@ -110,14 +113,13 @@ export class AutonomousRoll {
   DateArrival: string
   DateOfCreation: string
   Provider: string
-  Name: string
   Color: string
   Comment: string
   Material: string;
-  constructor(batches: BatchesOfRolls, roll: Roll) {
+  constructor(batches: BatchOfRolls, roll: Roll) {
     this.Id = roll.Id
     this.Quantity = roll.Quantity
-    this.Location = roll.Location
+    this.CellInWarehouse = roll.CellInWarehouse
     this.IsUsedUp = roll.IsUsedUp
     this.CounterpartyOwner = roll.CounterpartyOwner
     this.IsInWorkshop = roll.IsInWorkshop
@@ -125,10 +127,20 @@ export class AutonomousRoll {
     this.DateArrival = batches.DateArrival
     this.DateOfCreation = batches.DateOfCreation
     this.Provider = batches.Provider
-    this.Name = batches.Name
     this.Color = batches.Color
     this.Comment = batches.Comment
     this.Material = batches.Material
+  }
+  get Location():string {
+    if (this.IsUsedUp)
+      return "Израсходован";
+    if (this.IsInWorkshop === true)
+      return "В цеху";
+    if (this.CounterpartyOwner !== null)
+      return this.CounterpartyOwner;
+    if (this.CellInWarehouse === null)
+      return "Н/у"
+    return this.CellInWarehouse
   }
 
   Status(): RollStatus {
@@ -138,7 +150,7 @@ export class AutonomousRoll {
       return RollStatus.IN_WORKSHOP;
     if (this.CounterpartyOwner !== null)
       return RollStatus.AT_COUNTERPARTIES;
-    if (this.Location === null)
+    if (this.CellInWarehouse === null)
       return RollStatus.NOT_SPECIFIED;
     return RollStatus.IN_WAREHOUSE
   }

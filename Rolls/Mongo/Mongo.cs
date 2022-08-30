@@ -15,12 +15,19 @@ namespace Rolls.Mongo
         static MyMongo()
         {
             string connectionString;
+            string name;
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
                 connectionString = "mongodb://testR:testR@31.31.201.81:6890/?authSource=TestRolls";
+                name="TestRolls";
+            }
             else
+            {
                 connectionString=Program.ConnectionString;
+                name="Rolls";
+            }
             MongoClient client = new(connectionString);
-            IMongoDatabase databaseInventory = client.GetDatabase("TestRolls");
+            IMongoDatabase databaseInventory = client.GetDatabase(name);
             UsersCollection = databaseInventory.GetCollection<MyUser>("Users");
             ProdgectInfoCollection = databaseInventory.GetCollection<ProdgectInfo>("ProdgectInfo");
             BatchRollsCollection = databaseInventory.GetCollection<BatchRolls>("BatchRolls");

@@ -2,19 +2,24 @@
     display: flex;
     background: rgb(149 252 221);
 }
-.are-you-here-text{
-    font-size: 18px;
+
+.are-you-here-text {
+    font-size: 2em;
     font-weight: 700;
-    @media (min-width: 768px){
-    font-size: 30px;
-    }
 }
-.home-page{
+
+.home-page {
+    user-select: none;
     max-width: 100px;
     margin-right: 0;
     margin-left: auto;
     cursor: pointer;
-    &:hover{
+
+    &:hover {
         background: white
     }
-}  
+}
+
+h4 {
+    user-select: none;
+}

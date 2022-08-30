@@ -18,7 +18,7 @@ export class ListOfCounterpartiesComponent implements OnInit {
   constructor(private http: HttpService, private header: HeaderService,) { }
 
   ngOnInit(): void {
-    this.header.Item = "Редактирование: Контрагенты, Цвета, Материалы";
+    this.header.SetItem("Редактирование: Контрагенты, Цвета, Материалы")
     let th = this
     this.http.SendGet(`Main/GetCounterparties`).subscribe({
       next(value: any) {

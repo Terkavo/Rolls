@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { plainToInstance } from 'class-transformer';
 import { HeaderService } from 'src/app/html-elements/header/header.service';
 import { HttpService } from 'src/app/http/http.service';
-import { AutonomousRoll, BatchesOfRolls, RollStatus } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
+import { AutonomousRoll, BatchOfRolls, RollStatus } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 import { ListOfRollsService } from './list-of-rolls.service';
 
 @Component({
@@ -25,10 +25,18 @@ export class ListOfRollsComponent implements OnInit {
   public SearchAtCounterparties: boolean = true;
   public SearchUsedUp: boolean = true;
 
+  SordField: string = "Id";
+  SortUp: boolean = false
+
   constructor(private header: HeaderService, public Service: ListOfRollsService,) { }
   ngOnInit(): void {
-    this.header.Item = "Список рулонов"
+    this.header.SetItem("Список рулонов")
     let th = this
+    this.header.EventsSubjectReboot.subscribe({
+      next() {
+        th.Service.Upload().subscribe();
+      },
+    })
     this.Service.Upload().subscribe({
       next() {
         th.UpdateSerch()
@@ -90,5 +98,28 @@ export class ListOfRollsComponent implements OnInit {
           this.FitsRoolsArr.push(element)
       }
     }
+    this.SortRolls()
+  }
+  SortRolls() {
+    if (this.SordField === null)
+      return
+    this.FitsRoolsArr.sort((a, b) => {
+      let anyA: any = a as any;
+      let anyB: any = b as any;
+      let str = <string>anyA[<string>this.SordField]
+      let multiplier = 1
+      if (this.SortUp)
+        multiplier = -1
+      return str.localeCompare(<string>anyB[<string>this.SordField]) * multiplier;
+    });
+  }
+  SetSordField(val: string) {
+    if (val === this.SordField)
+      this.SortUp = !this.SortUp
+    else {
+      this.SordField = val
+      this.SortUp = false
+    }
+    this.SortRolls()
   }
 }

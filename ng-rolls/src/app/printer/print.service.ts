@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BatchesOfRolls } from '../pages/list-of-batches-of-rolls/list-of-batches-of-rolls.service';
+import { BatchOfRolls } from '../pages/list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrintService {
-  Batch: BatchesOfRolls;
+  Batch: BatchOfRolls;
   constructor() { }
   ElementToPrint:string=""
   print(type:string ){

@@ -23,7 +23,7 @@ namespace Rolls.Controllers.Api
             }
             catch
             {
-                AntiBruteforceManager.ConsiderAttempt(Request.HttpContext.Connection.LocalIpAddress.ToString());
+                AntiBruteforceManager.ConsiderAttempt(Request.Headers["X-Real-IP"].ToString());
                 return BadRequest(new { errorText = "Invalid username or password." });
             }
             var now = DateTime.UtcNow;
@@ -45,7 +45,15 @@ namespace Rolls.Controllers.Api
         [Authorize]
         public async Task<IActionResult> UpdateToken()
         {
-            MyUser user = await MyUser.UploadByLogin(User.FindFirst(c => c.Type == "Login").Value);
+            MyUser user=null;
+            try
+            {
+                user = await MyUser.UploadByLogin(User.FindFirst(c => c.Type == "Login").Value);
+            }
+            catch
+            {
+                return Unauthorized();
+            }
             var now = DateTime.UtcNow;
             var jwt = new JwtSecurityToken(
                 notBefore: now,

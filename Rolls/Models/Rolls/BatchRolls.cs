@@ -4,6 +4,7 @@ using Rolls.Mongo;
 using System;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Rolls.Models.Rolls
 {
@@ -12,15 +13,13 @@ namespace Rolls.Models.Rolls
         [BsonId]
         public string Id { get; set; }
         [BsonElement]
-        [DebuggerNonUserCode]
         public string DateArrival
         {
             set
             {
                 if (!DateOnly.TryParse(value, out DateOnly date))
-                    if (!DateOnly.TryParseExact(value[..10], "yyyy-mm-dd", out date))
-                        if (!DateOnly.TryParseExact(value, "dd/mm/yyyy", out date))
-                            date= DateOnly.ParseExact(value, "dd.mm.yyyy");
+                    if (!DateOnly.TryParseExact(value, "dd.MM.yyyy", out date))
+                            date= DateOnly.ParseExact(value[..10], "yyyy-MM-dd");
                 dateArrival=date;
             }
             get
@@ -28,6 +27,7 @@ namespace Rolls.Models.Rolls
                 return dateArrival.ToString("dd.MM.yyyy");
             }
         }
+        [JsonIgnore]
         private DateOnly dateArrival { get; set; }
         [JsonIgnore]
         public DateTime DateOfCreation { get; set; }
@@ -82,7 +82,7 @@ namespace Rolls.Models.Rolls
             BatchRolls batchMongo = await Upload(Id);
             string text = $"Обнавлена пачка:{Id}\n";
             if (batchMongo.DateArrival!=DateArrival)
-                text+=$"Дата прихода:{batchMongo.DateArrival}=>{DateArrival}/n";
+                text+=$"Дата прихода:{batchMongo.DateArrival}=>{DateArrival}\n";
             if (batchMongo.Provider!=Provider)
                 text+=$"Поставщик:{batchMongo.Provider}=>{Provider}\n";
             if (batchMongo.Color!=Color)
@@ -102,8 +102,9 @@ namespace Rolls.Models.Rolls
             return res;
         }
 
-        internal static async Task SetRollLocation(string id, string location)
+        internal static async Task SetRollLocation(string id, string location, string login)
         {
+            await LogElement.AsyncConstructor(id, "OnUpdateBatch", login, $"Размещен на складе:{location}");
             var filter = Builders<BatchRolls>.Filter.ElemMatch(x => x.Rolls, p => p.Id == id);
             var update = Builders<BatchRolls>.Update
                 .Set(c => c.Rolls[-1].CellInWarehouse, location);

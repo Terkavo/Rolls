@@ -5,11 +5,14 @@ import { BatchOfRolls } from '../pages/list-of-batches-of-rolls/list-of-batches-
   providedIn: 'root'
 })
 export class PrintService {
-  Batch: BatchOfRolls;
+  Batches: BatchOfRolls[] = new Array();
   constructor() { }
-  ElementToPrint:string=""
-  print(type:string ){
-    this.ElementToPrint=type
-    setTimeout(()=>print(),100)
+  ElementToPrint: string = ""
+  print(type: string) {
+    this.ElementToPrint = type
+    setTimeout(() => {
+      print(); 
+      this.ElementToPrint = "";
+    }, 100);
   }
 }

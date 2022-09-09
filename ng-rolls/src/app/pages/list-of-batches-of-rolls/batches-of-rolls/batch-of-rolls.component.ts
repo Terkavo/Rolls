@@ -32,7 +32,7 @@ export class BatchOfRollsComponent implements OnInit {
     }
   }
   onPrintTag() {
-    this.Printer.Batch=this.Batch
+    this.Printer.Batches.push(this.Batch)
     this.Printer.print("batch")
   }
   Change(){

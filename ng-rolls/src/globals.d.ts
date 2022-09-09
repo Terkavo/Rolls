@@ -1,9 +1,9 @@
 export { };
 declare global {
     interface Array<T> {
-        (newArray: Array<T>): void;
-        LeadToSimilarityWithBlacklist(newArray: Array<T>): void;
-        LeadToSimilarityWithBlacklist(newArray: Array<T>, nameIgnoredFields: string): void;
-        LeadToSimilarityWithBlacklist(newArray: Array<T>, nameIgnoredFields: string[]): void;
+        // (newArray: Array<T>): void;
+        СombineOnField(arr: Array<T>, field: string): void
+        Exists(fn: (x: T) => boolean): boolean;
+        Remove(el: T): boolean;
     }
 }

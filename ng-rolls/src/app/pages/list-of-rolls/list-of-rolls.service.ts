@@ -10,10 +10,10 @@ import { AutonomousRoll, BatchOfRolls, Roll } from '../list-of-batches-of-rolls/
 export class ListOfRollsService {
   Batches: BatchOfRolls[] = new Array();
   constructor(private http: HttpService) { }
-  Upload(): Observable<void> {
+  Upload(IsGetCounterparties: boolean = false, IsGetUsedUp: boolean = false): Observable<void> {
     let th = this
     return new Observable(observer => {
-      this.http.SendGet("Main/GetBatchesOfRolls").subscribe({
+      this.http.SendGet(`Main/GetBatchesOfRolls/?IsAtCounterparties=${IsGetCounterparties}&IsGetUsedUp=${IsGetUsedUp}`).subscribe({
         next(value) {
           let batches = plainToInstance(BatchOfRolls, value as Array<any>)
           batches.forEach(element => {
@@ -25,6 +25,22 @@ export class ListOfRollsService {
       })
     })
   }
+  UploadAtCounterparties(value: string) {
+    let th = this
+    return new Observable(observer => {
+      this.http.SendGet(`Main/GetBatchesOfRollsOnly/${value}`).subscribe({
+        next(value) {
+          let batches = plainToInstance(BatchOfRolls, value as Array<any>)
+          batches.forEach(element => {
+            element.ToClass();
+          });
+          th.Batches.СombineOnField(batches, "Id");
+          observer.next();
+        }
+      })
+    })
+  }
+
   GetRolls(): AutonomousRoll[] {
     let arr: AutonomousRoll[] = new Array();
     this.Batches.forEach(element => {

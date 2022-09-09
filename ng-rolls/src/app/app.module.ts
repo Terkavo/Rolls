@@ -33,6 +33,7 @@ import { CreateBathComponent } from './pages/create-bath/create-bath.component';
 import { ChangeBathComponent } from './pages/change-bath/change-bath.component';
 import { EditingBathComponent } from './html-elements/editing-bath/editing-bath.component';
 import { RollComponent } from './html-elements/editing-bath/roll/roll.component';
+import { MyRourerLinkDirective } from './Directive/my-rourer-link.directive';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { RollComponent } from './html-elements/editing-bath/roll/roll.component'
     CreateBathComponent,
     ChangeBathComponent,
     EditingBathComponent,
-    RollComponent
+    RollComponent,
+    MyRourerLinkDirective
   ],
   imports: [
     FormsModule,

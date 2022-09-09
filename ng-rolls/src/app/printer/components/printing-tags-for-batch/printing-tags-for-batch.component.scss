@@ -1,12 +1,11 @@
 .my-container {
     width: 21cm;
-    display: flex;
-    flex-wrap: wrap;
 }
 
 .element {
     width: 50%;
     display: flex;
+    border: solid 1px;
 }
 
 .qr {
@@ -16,6 +15,16 @@
 .data {
     width: 60%;
 }
-.code-text{
+
+.code-text {
     text-align: center;
+}
+
+.value {
+    font-size: 1.2em;
+}
+
+.pagebreak {
+    clear: both;
+    break-before: always;
 }

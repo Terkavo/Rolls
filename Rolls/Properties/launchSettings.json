@@ -10,7 +10,7 @@
   "profiles": {
     "Barcode": {
       "commandName": "Project",
-      "commandLineArgs": "mongodb://testR:testR@31.31.201.81:6890/?authSource=TestRolls",
+      "commandLineArgs": "mongodb://RollMain:U4rrCm%25be4s~~V%7B9Fh8D@31.31.201.81:6890/?authSource=Rolls",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

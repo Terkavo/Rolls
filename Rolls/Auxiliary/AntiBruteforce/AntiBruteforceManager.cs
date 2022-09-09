@@ -3,7 +3,7 @@
     static public class AntiBruteforceManager
     {
         private static List<IpCounter> counters = new();
-        private const uint maximuNumberOfRequests = 5;
+        private const uint maximuNumberOfRequests = 10;
         internal static bool IsAllowedToProvideContent(string ip)
         {
             IpCounter ipCounter = counters.Find(x => x.Ip == ip);

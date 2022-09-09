@@ -22,21 +22,25 @@ export class ListOfRollsComponent implements OnInit {
   public SerchNotSpecified: boolean = true;
   public SearchInWarehouse: boolean = true;
   public SearchInWorkshop: boolean = true;
-  public SearchAtCounterparties: boolean = true;
-  public SearchUsedUp: boolean = true;
+  public SearchAtCounterparties: boolean = false;
+  public SearchUsedUp: boolean = false;
 
-  SordField: string = "Id";
-  SortUp: boolean = false
+  private IsLoadedAtCounterparties = false;
+  private IsLoadedUsedUp = false;
 
-  constructor(private header: HeaderService, public Service: ListOfRollsService,) { }
+  private SordField: string = "Id";
+  private SortUp: boolean = true
+
+  constructor(private header: HeaderService, private Service: ListOfRollsService,) { }
   ngOnInit(): void {
-    this.header.SetItem("Список рулонов")
-    let th = this
-    this.header.EventsSubjectReboot.subscribe({
-      next() {
-        th.Service.Upload().subscribe();
-      },
+    this.header.SetItem("Список рулонов", () => {
+      this.Service.Upload(this.SearchAtCounterparties, this.SearchUsedUp).subscribe();
+      if (!this.SearchAtCounterparties)
+        this.IsLoadedAtCounterparties = false;
+      if (!this.SearchUsedUp)
+        this.IsLoadedUsedUp = false;
     })
+    let th = this
     this.Service.Upload().subscribe({
       next() {
         th.UpdateSerch()
@@ -98,18 +102,30 @@ export class ListOfRollsComponent implements OnInit {
           this.FitsRoolsArr.push(element)
       }
     }
-    this.SortRolls()
+    this.SortRolls(true)
   }
-  SortRolls() {
+  SortRolls(isNum: boolean = false) {
     if (this.SordField === null)
       return
     this.FitsRoolsArr.sort((a, b) => {
+      //debugger
       let anyA: any = a as any;
       let anyB: any = b as any;
       let str = <string>anyA[<string>this.SordField]
       let multiplier = 1
       if (this.SortUp)
         multiplier = -1
+      if (isNum) {
+        let num1 = (Number.parseFloat(str.replace(/[^.\d]/g, '')));
+        let num2 = Number.parseFloat(<string>anyB[<string>this.SordField].replace(/[^.\d]/g, ''))
+        if (Number.isNaN(num2))
+          return -1 * multiplier
+        if (Number.isNaN(num1))
+          return 1 * multiplier
+        if (num1 === num2)
+          return 0
+        return (num1 - num2) * multiplier
+      }
       return str.localeCompare(<string>anyB[<string>this.SordField]) * multiplier;
     });
   }
@@ -120,6 +136,26 @@ export class ListOfRollsComponent implements OnInit {
       this.SordField = val
       this.SortUp = false
     }
-    this.SortRolls()
+    if (val === "Id" || val === "Location" || val === "Quantity")
+      this.SortRolls(true)
+    else
+      this.SortRolls()
+  }
+  TryAdditionalLoading(val: string) {
+    if (val === "AtCounterparties") {
+      if (this.IsLoadedAtCounterparties)
+        return
+    }
+    else if (val === "UsedUp")
+      if (this.IsLoadedUsedUp)
+        return
+    this.Service.UploadAtCounterparties(val).subscribe(() => {
+      this.UpdateSerch();
+    })
+    if (val === "AtCounterparties")
+      this.IsLoadedAtCounterparties = true
+    else if (val === "UsedUp")
+      this.IsLoadedUsedUp = true
+
   }
 }

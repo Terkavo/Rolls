@@ -4,57 +4,42 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
-Array.prototype.LeadToSimilarityWithBlacklist = function (newArray: any[], nameIgnoredFields?: string[] | string) {
-  let safeNameIgnoredFields: string[]
-  if (nameIgnoredFields === undefined)
-    safeNameIgnoredFields = [];
-  else if (typeof nameIgnoredFields === "string")
-    safeNameIgnoredFields = [nameIgnoredFields]
-  else safeNameIgnoredFields = nameIgnoredFields
-  for (let i = 0; i < this.length; i++) {
-    const thisArrayElement = this[i];
-    let copyThisArrayElement: any = {};
-    Object.assign(copyThisArrayElement, thisArrayElement)
-    safeNameIgnoredFields.forEach(value => {
-      delete copyThisArrayElement[value]
-    })
-    let isNeedDelete = true
-    newArray.forEach(newArrayElement => {
-      let copyNewArrayElement: any = {};
-      Object.assign(copyNewArrayElement, newArrayElement)
-      safeNameIgnoredFields.forEach(value => {
-        delete copyNewArrayElement[value]
-      })
-      if (JSON.stringify(copyNewArrayElement) === JSON.stringify(copyThisArrayElement))
-        isNeedDelete = false;
-    })
-    if (isNeedDelete) {
-      this.splice(i, 1);
-      i--
-    }
-  }
-  newArray.forEach((newArrayElement, id) => {
-    let copyNewArrayElement: any = {};
-    Object.assign(copyNewArrayElement, newArrayElement)
-    safeNameIgnoredFields.forEach(value => {
-      delete copyNewArrayElement[value]
-    })
-    let isNeedAdd = true
-    this.forEach(thisArrayElement => {
-      let copyThisArrayElement: any = {};
-      Object.assign(copyThisArrayElement, thisArrayElement)
-      safeNameIgnoredFields.forEach(value => {
-        delete copyThisArrayElement[value]
-      })
-      if (JSON.stringify(copyThisArrayElement) === JSON.stringify(copyNewArrayElement)) {
-        isNeedAdd = false
-      }
-    })
-    if (isNeedAdd)
-      this.push(newArrayElement);
-  });
-}
 
+Array.prototype.Remove = function (el: any) {
+  let num;
+  for (let index = 0; index < this.length; index++) {
+    if (this[index] === el)
+      num = index
+  }
+  if (num === undefined)
+    return false;
+  this.splice(num, 1)
+  return true;
+}
+Array.prototype.Exists = function (fn: (x: any) => boolean) {
+  for (let index = 0; index < this.length; index++) {
+    const element = this[index];
+    if (fn(element))
+      return true;
+  }
+  return false;
+}
+Array.prototype.СombineOnField = function (arr: any[], field: string) {
+  for (let index = 0; index < arr.length; index++) {
+    const elementOtherArr = arr[index];
+    let IsDoNotAdd = false;
+    for (let index = 0; index < this.length; index++) {
+      const elementThisArr = this[index];
+      if (elementThisArr[field] === elementOtherArr[field]) {
+        IsDoNotAdd = true;
+        break
+      }
+    }
+    if (IsDoNotAdd)
+      continue
+    this.push(elementOtherArr)
+  }
+}
 if (environment.production) {
   enableProdMode();
 }

@@ -5,8 +5,8 @@ namespace Rolls
 {
     public class AuthOptions
     {
-        const string KEY = "Развивайся либо сдохни как ГКЧП";  
-        public const int LIFETIMEDAY = 14; 
+        static readonly string KEY = Program.ConnectionString;
+        public const int LIFETIMEDAY = 14;
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(KEY));

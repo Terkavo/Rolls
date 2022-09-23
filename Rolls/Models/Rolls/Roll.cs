@@ -1,4 +1,6 @@
-﻿namespace Rolls.Models.Rolls
+﻿using System;
+
+namespace Rolls.Models.Rolls
 {
     public class Roll
     {
@@ -8,5 +10,6 @@
         public string CounterpartyOwner { get; set; }
         public bool IsInWorkshop { get; set; }
         public bool IsUsedUp { get; set; }
+        public DateTime? InTheWorkshopWith { get; set; }
     }
 }

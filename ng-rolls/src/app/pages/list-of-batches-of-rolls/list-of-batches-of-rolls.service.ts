@@ -91,7 +91,7 @@ export class Roll {
   CounterpartyOwner: string | null = null;
   IsInWorkshop: boolean = false
   IsUsedUp: boolean | null = null
-
+  InTheWorkshopWith: string
   constructor(quantity: string = "") {
     this.Quantity = quantity
   }
@@ -110,12 +110,15 @@ export class AutonomousRoll {
   IsInWorkshop: boolean;
   IsUsedUp: boolean | null = null
 
+  OrderId: string
   DateArrival: string
   DateOfCreation: string
   Provider: string
   Color: string
   Comment: string
   Material: string;
+
+  InTheWorkshopWith: string
   constructor(batches: BatchOfRolls, roll: Roll) {
     this.Id = roll.Id
     this.Quantity = roll.Quantity
@@ -123,7 +126,9 @@ export class AutonomousRoll {
     this.IsUsedUp = roll.IsUsedUp
     this.CounterpartyOwner = roll.CounterpartyOwner
     this.IsInWorkshop = roll.IsInWorkshop
+    this.InTheWorkshopWith = roll.InTheWorkshopWith;
 
+    this.OrderId = batches.Id
     this.DateArrival = batches.DateArrival
     this.DateOfCreation = batches.DateOfCreation
     this.Provider = batches.Provider
@@ -131,7 +136,7 @@ export class AutonomousRoll {
     this.Comment = batches.Comment
     this.Material = batches.Material
   }
-  get Location():string {
+  get Location(): string {
     if (this.IsUsedUp)
       return "Израсходован";
     if (this.IsInWorkshop === true)

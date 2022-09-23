@@ -14,7 +14,7 @@ export class HttpService {
     console.log(this.Link)
   }
   SetToken(token: string) {
-    this.myHeaders = this.myHeaders.set('Authorization', "Bearer " + token)
+    this.myHeaders = new HttpHeaders().set('Authorization', "Bearer " + token)
   }
   SendGet(link: string): Observable<Object> {
     return new Observable(x => {

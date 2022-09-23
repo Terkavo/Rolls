@@ -11,7 +11,6 @@ import { HeaderComponent } from './html-elements/header/header.component';
 import { AuthorizationComponent } from './authorization/authorization-module/authorization.component';
 import { PrinterComponent } from './printer/printer/printer.component';
 import { HttpService } from './http/http.service';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { OneTwoDesignComponent } from './html-elements/one-two-design/one-two-design.component';
@@ -34,6 +33,7 @@ import { ChangeBathComponent } from './pages/change-bath/change-bath.component';
 import { EditingBathComponent } from './html-elements/editing-bath/editing-bath.component';
 import { RollComponent } from './html-elements/editing-bath/roll/roll.component';
 import { MyRourerLinkDirective } from './Directive/my-rourer-link.directive';
+import { PrintingTagsForRollComponent } from './printer/components/printing-tags-for-roll/printing-tags-for-roll.component';
 
 
 @NgModule({
@@ -64,7 +64,8 @@ import { MyRourerLinkDirective } from './Directive/my-rourer-link.directive';
     ChangeBathComponent,
     EditingBathComponent,
     RollComponent,
-    MyRourerLinkDirective
+    MyRourerLinkDirective,
+    PrintingTagsForRollComponent
   ],
   imports: [
     FormsModule,

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { plainToInstance } from 'class-transformer';
 import { HeaderService } from 'src/app/html-elements/header/header.service';
 import { HttpService } from 'src/app/http/http.service';
+import { PrintService } from 'src/app/printer/print.service';
 import { AutonomousRoll, BatchOfRolls, RollStatus } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 import { ListOfRollsService } from './list-of-rolls.service';
 
@@ -31,10 +33,19 @@ export class ListOfRollsComponent implements OnInit {
   private SordField: string = "Id";
   private SortUp: boolean = true
 
-  constructor(private header: HeaderService, private Service: ListOfRollsService,) { }
+  @ViewChild('body') body: ElementRef<HTMLElement>;
+
+  IsMenuOn: boolean = false;
+  MenuRoll: AutonomousRoll;
+  MenuX: number = 0;
+  MenuY: number = 0;
+
+  IsPrintingRollIsUnderway = false
+  constructor(private header: HeaderService, private Service: ListOfRollsService, private router: Router, private Printer: PrintService) { }
   ngOnInit(): void {
+    document.oncontextmenu = function () { return false }
     this.header.SetItem("Список рулонов", () => {
-      this.Service.Upload(this.SearchAtCounterparties, this.SearchUsedUp).subscribe();
+      this.Service.Upload(this.SearchAtCounterparties, this.SearchUsedUp).subscribe(() => this.UpdateSerch());
       if (!this.SearchAtCounterparties)
         this.IsLoadedAtCounterparties = false;
       if (!this.SearchUsedUp)
@@ -108,7 +119,6 @@ export class ListOfRollsComponent implements OnInit {
     if (this.SordField === null)
       return
     this.FitsRoolsArr.sort((a, b) => {
-      //debugger
       let anyA: any = a as any;
       let anyB: any = b as any;
       let str = <string>anyA[<string>this.SordField]
@@ -157,5 +167,31 @@ export class ListOfRollsComponent implements OnInit {
     else if (val === "UsedUp")
       this.IsLoadedUsedUp = true
 
+  }
+  onRightClick(event: MouseEvent, product: AutonomousRoll) {
+    if (event.buttons !== 2) {
+      this.IsMenuOn = false;
+      return;
+    }
+    this.MenuX = event.clientX
+    this.MenuY = event.clientY
+    this.MenuRoll = product
+    this.IsMenuOn = true;
+
+  }
+  OpenBatch() {
+    this.router.navigate([`list-of-batches-of-rolls/${this.MenuRoll.OrderId}`]);
+  }
+  PrintRoll() {
+    this.IsPrintingRollIsUnderway = true
+    setTimeout(() => {
+      this.Printer.Roll = this.MenuRoll
+      this.Printer.print("roll")
+      setTimeout(()=>this.IsPrintingRollIsUnderway = false,100)
+      
+    });
+  }
+  Print(){
+    print()
   }
 }

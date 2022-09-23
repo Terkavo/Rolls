@@ -14,18 +14,8 @@ namespace Rolls.Mongo
 
         static MyMongo()
         {
-            string connectionString;
-            string name;
-            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
-            {
-                connectionString = "mongodb://testR:testR@31.31.201.81:6890/?authSource=TestRolls";
-                name="TestRolls";
-            }
-            else
-            {
-                connectionString=Program.ConnectionString;
-                name="Rolls";
-            }
+            string connectionString = Program.ConnectionString;
+            string name = Program.NameDataBase;
             MongoClient client = new(connectionString);
             IMongoDatabase databaseInventory = client.GetDatabase(name);
             UsersCollection = databaseInventory.GetCollection<MyUser>("Users");

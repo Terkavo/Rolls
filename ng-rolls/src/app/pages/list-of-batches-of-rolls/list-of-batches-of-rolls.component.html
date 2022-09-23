@@ -1,6 +1,6 @@
 <ng-template #LeftBlock>
     <button class="btn btn-primary m-1" (click)="Print()">Печать бирок</button>
-    <div *ngFor="let item of Service.Batches" class="invoice border border-dark rounded" [appMyRourerLink]="item.Id">
+    <div *ngFor="let item of Service.Batches" class="invoice border border-dark rounded" [appMyRourerLink]="'/list-of-batches-of-rolls/'+item.Id">
         <div class="d-flex flex-wrap">
             <div class="m-1 fs-2 d-inline-block"><b>{{item.Id}}</b> </div>
             <div class="m-1 d-inline-block"><b>{{item.DateOfCreation | date:'dd.MM.yy H:mm'}}</b></div>

@@ -26,11 +26,11 @@ export class ListOfBatchesOfRollsComponent implements OnInit {
     else
       this.OnPrintBatches.Remove(el)
   }
-  IsChesced(id: string){
-   return this.OnPrintBatches.Exists(x => x.Id === id)
+  IsChesced(id: string) {
+    return this.OnPrintBatches.Exists(x => x.Id === id)
   }
-  Print(){
-    this.Printer.Batches=this.OnPrintBatches;
+  Print() {
+    this.Printer.Batches = this.OnPrintBatches;
     this.Printer.print("batch");
   }
 }

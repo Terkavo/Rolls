@@ -19,7 +19,7 @@ namespace Rolls.Models.Rolls
             {
                 if (!DateOnly.TryParse(value, out DateOnly date))
                     if (!DateOnly.TryParseExact(value, "dd.MM.yyyy", out date))
-                            date= DateOnly.ParseExact(value[..10], "yyyy-MM-dd");
+                        date= DateOnly.ParseExact(value[..10], "yyyy-MM-dd");
                 dateArrival=date;
             }
             get
@@ -122,10 +122,11 @@ namespace Rolls.Models.Rolls
 
         internal static async Task TransferringRollsToWarehouse(string id, string userLogin)
         {
-            await LogElement.AsyncConstructor(id, "TransferringRollsToWarehouse", userLogin, "Перенесен в склад");
+            await LogElement.AsyncConstructor(id, "TransferringRollsToWarehouse", userLogin, "Перенесен в цех");
             var filter = Builders<BatchRolls>.Filter.ElemMatch(x => x.Rolls, p => p.Id == id);
             var update = Builders<BatchRolls>.Update
-                .Set(c => c.Rolls[-1].IsInWorkshop, true);
+                .Set(c => c.Rolls[-1].IsInWorkshop, true)
+                .Set(c => c.Rolls[-1].InTheWorkshopWith, DateTime.Now);
             await Collection.UpdateOneAsync(filter, update);
         }
 

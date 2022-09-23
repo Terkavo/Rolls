@@ -2,3 +2,8 @@
     margin-right: 1em;
     margin-left: auto;
 }
+*{
+    @media print {
+        display: none;
+    }
+}

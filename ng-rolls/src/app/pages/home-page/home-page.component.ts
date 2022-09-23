@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HeaderService } from 'src/app/html-elements/header/header.service';
 import { AuthorizationService } from 'src/app/authorization/authorization.service';
+import { HeaderService } from 'src/app/html-elements/header/header.service';
 
 @Component({
   selector: 'app-home-page',

@@ -6,6 +6,7 @@
     &:hover {
         background: #86b7ff;
     }
+
     @media (max-width: 767.98px) {
         display: block;
     }
@@ -16,5 +17,12 @@
 
     @media (max-width: 767.98px) {
         width: 100%;
+    }
+}
+
+.right {
+    @media (min-width: 767.98px) {
+        position: fixed;
+        width: 50%;
     }
 }

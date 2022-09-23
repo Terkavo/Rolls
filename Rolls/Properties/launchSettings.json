@@ -1,20 +1,12 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:19165",
-      "sslPort": 44327
-    }
-  },
   "profiles": {
     "Barcode": {
       "commandName": "Project",
-      "commandLineArgs": "mongodb://RollMain:U4rrCm%25be4s~~V%7B9Fh8D@31.31.201.81:6890/?authSource=Rolls",
+      "commandLineArgs": "mongodb://testR:testR@31.31.201.81:6890/?authSource=TestRolls TestRolls",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:7084;http://localhost:5276;http://192.168.0.4",
+      "applicationUrl": "https://localhost:7084;http://localhost:5276",
       "dotnetRunMessages": true
     },
     "IIS Express": {
@@ -30,6 +22,14 @@
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "publishAllPorts": true,
       "useSSL": true
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:19165",
+      "sslPort": 44327
     }
   }
 }

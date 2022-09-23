@@ -100,24 +100,27 @@ $small-spinner-dimensions: $main-spinner-dimensions * 0.7; //width and height of
 td {
   white-space: pre-wrap;
 }
-.list-of-rolls-grid-container{
+
+.list-of-rolls-grid-container {
   display: grid;
-  grid-template-columns: 3em 1fr 1fr 1fr 6em 4em 6em 1fr;
+  grid-template-columns: 3em 1fr 1fr 1fr 6em 4em 6em 6em 1fr;
 }
 
 @function calcFluidFontSize($f-min, $f-max, $v-min, $v-max) {
   $k: ($f-max - $f-min)/($v-max - $v-min);
   $b: $f-min - $k * $v-min;
 
-  $b: $b + rem;
+  $b: $b +rem;
 
-  @return calc( #{$k} * 100vw + #{$b} );
+  @return calc(#{$k} * 100vw + #{$b});
 }
+
 html {
   font-size: calcFluidFontSize(0.7, 1, 30, 80);
 }
-.btn-outline-primary{
-  &:hover{
+
+.btn-outline-primary {
+  &:hover {
     background-color: #abe9ff;
     color: #000000;
   }

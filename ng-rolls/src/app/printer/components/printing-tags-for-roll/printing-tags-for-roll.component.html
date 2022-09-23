@@ -1,0 +1,15 @@
+<div class="element">
+    <div class="data">
+        <div class="data mx-auto">{{Service.Roll.DateArrival}}</div>
+        <div class="flex-break"></div>
+        <div class="value mx-3">{{Service.Roll.Provider}}</div>
+        <div class="value mx-3">{{Service.Roll.Material}}</div>
+        <div class="value mx-3">{{Service.Roll.Color}}</div>
+        <div class="value mx-3">{{Service.Roll.Quantity}}</div>
+        <div class="value mx-3" *ngIf="Service.Roll.Comment!==''">Коментарий: {{Service.Roll.Comment}}</div>
+    </div>
+    <div class="qr">
+        <app-qr [Value]="Service.Roll.Id"></app-qr>
+        <div class="code-text">{{Service.Roll.Id}}</div>
+    </div>
+</div>

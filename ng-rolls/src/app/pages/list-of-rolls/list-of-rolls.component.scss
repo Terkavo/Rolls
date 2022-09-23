@@ -1,17 +1,48 @@
-.header{
+.header {
     font-weight: 700;
 }
-.item{
- border: solid 1px rgb(93 93 93);
+
+.item {
+    border: solid 1px rgb(93 93 93);
     overflow-wrap: anywhere;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+        background-color: aqua;
+    }
 }
-.ww{
-    border-radius: 0.25rem;
+
+.my-table {
+    min-width: 50em;
 }
-.my-table{
-    min-width:750px ;
-}
-.w-100{
+
+.w-100 {
     overflow: auto;
     max-width: 100%;
+}
+
+.body {
+    page-break-inside: auto;
+}
+
+.roll-container {
+    page-break-inside: avoid;
+    page-break-after: auto;
+}
+
+.menu {
+    position: fixed;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+}
+.noprint{
+    @media print {
+        display: none;
+    }
+}
+.printbutton{
+    margin-right: 0px!important;
+    margin-left: auto!important;
 }

@@ -13,8 +13,7 @@ export class DatalistComponent implements OnInit, OnDestroy {
   public get Optuons(): DataListOptions[] {
     return this._Optuons;
   }
-  @Input()
-  public set Optuons(value: DataListOptions[] | string[]) {
+  @Input() public set Optuons(value: DataListOptions[] | string[]) {
     if (value.length === 0)
       return;
     if (typeof value[0] === "string")
@@ -30,7 +29,7 @@ export class DatalistComponent implements OnInit, OnDestroy {
   @ViewChild('input') Input: ElementRef<HTMLInputElement>;
   //value
   private _Value: string = "";
-  set Value(value: string) {
+  @Input() set Value(value: string) {
     this._Value = value
     this.updateCorrectOptions()
     this.runFullComplianceCheck()

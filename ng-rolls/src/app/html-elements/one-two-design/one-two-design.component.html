@@ -8,8 +8,10 @@
                 <ng-container *ngTemplateOutlet="LeftBlockHtml"></ng-container>
             </div>
             <div class="block" *ngIf="!IsHiddenRightBlock">
-                <i class="bi bi-x-octagon" routerLink="/list-of-batches-of-rolls"></i>
-                <router-outlet></router-outlet>
+                <div class="right">
+                    <i class="bi bi-x-octagon" routerLink="/list-of-batches-of-rolls"></i>
+                    <router-outlet></router-outlet>
+                </div>
             </div>
         </div>
     </ng-template>

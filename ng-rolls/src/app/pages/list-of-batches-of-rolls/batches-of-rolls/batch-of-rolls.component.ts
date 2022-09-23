@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpService } from 'src/app/http/http.service';
 import { PrintService } from 'src/app/printer/print.service';
-import { BatchesOfRolls, ListOfBatchesOfRollsService } from '../list-of-batches-of-rolls.service';
+import { BatchOfRolls, ListOfBatchesOfRollsService } from '../list-of-batches-of-rolls.service';
 
 @Component({
   selector: 'app-batch-of-rolls',
@@ -11,7 +11,7 @@ import { BatchesOfRolls, ListOfBatchesOfRollsService } from '../list-of-batches-
 })
 export class BatchOfRollsComponent implements OnInit {
   private Id: string;
-  Batch: BatchesOfRolls;
+  Batch: BatchOfRolls;
   IsReadyForRendering: boolean = false;
 
   constructor(private route: ActivatedRoute, public PrintServise: PrintService, private router: Router,
@@ -32,7 +32,10 @@ export class BatchOfRollsComponent implements OnInit {
     }
   }
   onPrintTag() {
-    this.Printer.Batch=this.Batch
+    this.Printer.Batches.push(this.Batch)
     this.Printer.print("batch")
+  }
+  Change(){
+    this.router.navigate([`/change-bath/${this.Id}`])
   }
 }

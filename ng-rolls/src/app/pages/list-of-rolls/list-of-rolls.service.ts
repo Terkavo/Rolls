@@ -2,20 +2,20 @@ import { Injectable } from '@angular/core';
 import { plainToInstance } from 'class-transformer';
 import { Observable } from 'rxjs';
 import { HttpService } from 'src/app/http/http.service';
-import { AutonomousRoll, BatchesOfRolls, Roll } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
+import { AutonomousRoll, BatchOfRolls, Roll } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListOfRollsService {
-  Batches: BatchesOfRolls[] = new Array();
+  Batches: BatchOfRolls[] = new Array();
   constructor(private http: HttpService) { }
-  Upload(): Observable<void> {
+  Upload(IsGetCounterparties: boolean = false, IsGetUsedUp: boolean = false): Observable<void> {
     let th = this
     return new Observable(observer => {
-      this.http.SendGet("Main/GetBatchesOfRolls").subscribe({
+      this.http.SendGet(`Main/GetBatchesOfRolls/?IsAtCounterparties=${IsGetCounterparties}&IsGetUsedUp=${IsGetUsedUp}`).subscribe({
         next(value) {
-          let batches = plainToInstance(BatchesOfRolls, value as Array<any>)
+          let batches = plainToInstance(BatchOfRolls, value as Array<any>)
           batches.forEach(element => {
             element.ToClass();
           });
@@ -25,6 +25,22 @@ export class ListOfRollsService {
       })
     })
   }
+  UploadAtCounterparties(value: string) {
+    let th = this
+    return new Observable(observer => {
+      this.http.SendGet(`Main/GetBatchesOfRollsOnly/${value}`).subscribe({
+        next(value) {
+          let batches = plainToInstance(BatchOfRolls, value as Array<any>)
+          batches.forEach(element => {
+            element.ToClass();
+          });
+          th.Batches.СombineOnField(batches, "Id");
+          observer.next();
+        }
+      })
+    })
+  }
+
   GetRolls(): AutonomousRoll[] {
     let arr: AutonomousRoll[] = new Array();
     this.Batches.forEach(element => {
@@ -32,7 +48,7 @@ export class ListOfRollsService {
     });
     return arr;
   }
-  FindBatchOnRollsId(id: string): BatchesOfRolls {
+  FindBatchOnRollsId(id: string): BatchOfRolls {
     let ret = this.Batches.find(x => x.Rolls.find(y => y.Id === id) !== undefined)
     if (ret === undefined)
       throw new Error();

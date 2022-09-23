@@ -1,0 +1,9 @@
+.my-rourer-link-ignore{
+    margin-right: 1em;
+    margin-left: auto;
+}
+*{
+    @media print {
+        display: none;
+    }
+}

@@ -1,6 +1,6 @@
 .content {
     @media print {
-        display: none;
+      //  display: none;
     }
 }
 
@@ -9,5 +9,10 @@ app-printer {
 
     @media print {
         display: block;
+    }
+}
+app-header{
+    @media print {
+        display: none;
     }
 }

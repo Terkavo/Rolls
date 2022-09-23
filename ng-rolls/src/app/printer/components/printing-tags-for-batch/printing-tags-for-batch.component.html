@@ -1,18 +1,22 @@
 <div class="my-container">
-    <div *ngFor="let item of Service.Batch.Rolls" class="element">
-        <div class="data">
-            <div class="data mx-auto">{{Service.Batch.DateArrival}}</div>
-            <div class="flex-break"></div>
-            <div class="value mx-3">{{Service.Batch.Provider}}</div>
-            <div class="value mx-3">{{Service.Batch.Name}}</div>
-            <div class="value mx-3">{{Service.Batch.Color}}</div>
-            <div class="value mx-3">{{Service.Batch.Material}}</div>
-            <div class="value mx-3" *ngIf="Service.Batch.Comment!==''">Коментарий: {{Service.Batch.Comment}}</div>
-            <div class="value mx-3">{{item.Quantity}}</div>
+    <div *ngFor="let list of Lists;let index=index" class="list ">
+        <div class="d-flex flex-wrap">
+            <div *ngFor="let roll of list.Rolls;let index=index" class="element">
+                <div class="data">
+                    <div class="data mx-auto">{{roll.DateArrival}}</div>
+                    <div class="flex-break"></div>
+                    <div class="value mx-3">{{roll.Provider}}</div>
+                    <div class="value mx-3">{{roll.Material}}</div>
+                    <div class="value mx-3">{{roll.Color}}</div>
+                    <div class="value mx-3">{{roll.Quantity}}</div>
+                    <div class="value mx-3" *ngIf="roll.Comment!==''">Коментарий: {{roll.Comment}}</div>
+                </div>
+                <div class="qr">
+                    <app-qr [Value]="roll.Id"></app-qr>
+                    <div class="code-text">{{roll.Id}}</div>
+                </div>
+            </div>
         </div>
-        <div class="qr">
-            <app-qr [Value]="item.Id"></app-qr>
-            <div class="code-text">{{item.Id}}</div>
-        </div>
+        <div class="pagebreak"> </div>
     </div>
 </div>

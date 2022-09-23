@@ -3,13 +3,17 @@
     public class AntiBruteforceMiddleware
     {
         private readonly RequestDelegate next;
-        public AntiBruteforceMiddleware(RequestDelegate next)
+        private readonly ILogger<Program> _logger;
+
+        public AntiBruteforceMiddleware(RequestDelegate next, ILogger<Program> logger)
         {
             this.next = next;
+            _logger=logger;
         }
         public async Task InvokeAsync(HttpContext context)
         {
-            var ip = context.Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            var ip = context.Request.Headers["X-Real-IP"].ToString();
+            _logger.LogInformation(ip);
             if (AntiBruteforceManager.IsAllowedToProvideContent(ip))
                 await next.Invoke(context);
             else

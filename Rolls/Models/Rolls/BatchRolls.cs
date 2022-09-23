@@ -4,6 +4,7 @@ using Rolls.Mongo;
 using System;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Rolls.Models.Rolls
 {
@@ -12,26 +13,34 @@ namespace Rolls.Models.Rolls
         [BsonId]
         public string Id { get; set; }
         [BsonElement]
-        [DebuggerNonUserCode]
         public string DateArrival
         {
             set
             {
                 if (!DateOnly.TryParse(value, out DateOnly date))
-                    if (!DateOnly.TryParseExact(value[..10], "yyyy-mm-dd", out date))
-                        if (!DateOnly.TryParseExact(value, "dd/mm/yyyy", out date))
-                            date= DateOnly.ParseExact(value, "dd.mm.yyyy");
+                    if (!DateOnly.TryParseExact(value, "dd.MM.yyyy", out date))
+                        date= DateOnly.ParseExact(value[..10], "yyyy-MM-dd");
                 dateArrival=date;
             }
             get
             {
-                return dateArrival.ToString();
+                return dateArrival.ToString("dd.MM.yyyy");
             }
         }
+        [JsonIgnore]
         private DateOnly dateArrival { get; set; }
+        [JsonIgnore]
         public DateTime DateOfCreation { get; set; }
-        public string Name { get; set; }
+        [JsonPropertyName("DateOfCreation")]
+        public DateTime JsonDateOfCreation
+        {
+            get
+            {
+                return DateOfCreation;
+            }
+        }
         public string Provider { get; set; }
+
         public string Color { get; set; }
         public string Material { get; set; }
         public string Comment { get; set; }
@@ -56,7 +65,35 @@ namespace Rolls.Models.Rolls
                 rollsId+=item.Id+",";
             await LogElement.AsyncConstructor(Id, "OnCrateBatch", userLogin, $"Создана Пачка со следующими рулонами{rollsId}");
         }
-
+        internal async Task UpdateBatchOfRolls(string login)
+        {
+            var filter = Builders<BatchRolls>.Filter.Eq(c => c.Id, Id);
+            _= CrateLogOnUpdate(login);
+            var update = Builders<BatchRolls>.Update.
+                Set(c => c.DateArrival, DateArrival).
+                Set(c => c.Provider, Provider).
+                Set(c => c.Color, Color).
+                Set(c => c.Material, Material).
+                Set(c => c.Comment, Comment);
+            await Collection.UpdateOneAsync(filter, update);
+        }
+        private async Task CrateLogOnUpdate(string userLogin)
+        {
+            BatchRolls batchMongo = await Upload(Id);
+            string text = $"Обнавлена пачка:{Id}\n";
+            if (batchMongo.DateArrival!=DateArrival)
+                text+=$"Дата прихода:{batchMongo.DateArrival}=>{DateArrival}\n";
+            if (batchMongo.Provider!=Provider)
+                text+=$"Поставщик:{batchMongo.Provider}=>{Provider}\n";
+            if (batchMongo.Color!=Color)
+                text+=$"Цвет:{batchMongo.Color}=>{Color}\n";
+            if (batchMongo.Material!=Material)
+                text+=$"Материал:{batchMongo.Material}=>{Material}\n";
+            if (batchMongo.Comment!=Comment)
+                text+=$"Коментарий:{batchMongo.Comment}=>{Comment}\n";
+            text= text.Trim('\n');
+            await LogElement.AsyncConstructor(Id, "OnUpdateBatch", userLogin, text);
+        }
         internal static async Task<BatchRolls> GetRoll(string id)
         {
             var bilder = Builders<BatchRolls>.Filter.ElemMatch(x => x.Rolls, x => x.Id == id);
@@ -65,11 +102,12 @@ namespace Rolls.Models.Rolls
             return res;
         }
 
-        internal static async Task SetRollLocation(string id, string location)
+        internal static async Task SetRollLocation(string id, string location, string login)
         {
+            await LogElement.AsyncConstructor(id, "OnUpdateBatch", login, $"Размещен на складе:{location}");
             var filter = Builders<BatchRolls>.Filter.ElemMatch(x => x.Rolls, p => p.Id == id);
             var update = Builders<BatchRolls>.Update
-                .Set(c => c.Rolls[-1].Location, location);
+                .Set(c => c.Rolls[-1].CellInWarehouse, location);
             await Collection.UpdateOneAsync(filter, update);
         }
 
@@ -84,10 +122,11 @@ namespace Rolls.Models.Rolls
 
         internal static async Task TransferringRollsToWarehouse(string id, string userLogin)
         {
-            await LogElement.AsyncConstructor(id, "TransferringRollsToWarehouse", userLogin, "Перенесен в склад");
+            await LogElement.AsyncConstructor(id, "TransferringRollsToWarehouse", userLogin, "Перенесен в цех");
             var filter = Builders<BatchRolls>.Filter.ElemMatch(x => x.Rolls, p => p.Id == id);
             var update = Builders<BatchRolls>.Update
-                .Set(c => c.Rolls[-1].IsInWorkshop, true);
+                .Set(c => c.Rolls[-1].IsInWorkshop, true)
+                .Set(c => c.Rolls[-1].InTheWorkshopWith, DateTime.Now);
             await Collection.UpdateOneAsync(filter, update);
         }
 

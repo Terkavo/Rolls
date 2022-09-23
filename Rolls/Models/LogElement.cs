@@ -1,9 +1,13 @@
-﻿using Rolls.Mongo;
+﻿using MongoDB.Bson;
+using Rolls.Mongo;
+using System.Text.Json.Serialization;
 
 namespace Rolls.Models
 {
     public class LogElement : Downloadable<LogElement>
     {
+        [JsonIgnore]
+        public ObjectId Id { get; set; }
         public string ParentId { get; set; }
         public string Name { get; set; }
         public string ExecutorLogin { get; set; }
@@ -23,5 +27,7 @@ namespace Rolls.Models
             LogElement element = new(parentId, name, executorLogin, text);
             await Collection.InsertOneAsync(element);
         }
+
+       
     }
 }

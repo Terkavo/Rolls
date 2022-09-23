@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { plainToInstance } from 'class-transformer';
 import { Observable } from 'rxjs';
 import { HttpService } from 'src/app/http/http.service';
-import { AutonomousRoll, BatchesOfRolls } from 'src/app/pages/list-of-batches-of-rolls/list-of-batches-of-rolls.service';
+import { AutonomousRoll, BatchOfRolls } from 'src/app/pages/list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 
 @Component({
   selector: 'app-rool-loader',
@@ -54,7 +54,7 @@ export class RoolLoaderComponent implements OnInit {
     this.http.SendGet(`Main/GetRoll/R-${this.Value}`).subscribe({
       next(value: any) {
         th.IsLoaded = true
-        let batch = plainToInstance(BatchesOfRolls, value)
+        let batch = plainToInstance(BatchOfRolls, value)
         batch.ToClass()
         th.Roll = batch.GetAutonomousRoll()[0];
         th.UploadedEvent.emit(th.Roll)

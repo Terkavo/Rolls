@@ -2,8 +2,8 @@
     <app-rool-loader (uploaded)="Roll=$event" (badlyUploaded)="Roll=null"
         [ThrowOffEvent]="ThrowOffEvent.asObservable()"></app-rool-loader>
     <div class="content" *ngIf="Roll!==null">
-        <div class="alert alert-warning" *ngIf="Roll!==null&&Roll!.Location!==null">
-            местоположение данного рулона уже указанно как:{{Roll!.Location}}, но вы можете изменить его
+        <div class="alert alert-warning" *ngIf="Roll!==null&&Roll!.CellInWarehouse!==null">
+            местоположение данного рулона уже указанно как:{{Roll!.CellInWarehouse}}, но вы можете изменить его
             местоположение</div>
         <app-datalist [Optuons]="Locations" (myInput)="LocationEvent=$event"></app-datalist>
         <button type="button" class="btn btn-primary" (click)="SetRollLocation()"

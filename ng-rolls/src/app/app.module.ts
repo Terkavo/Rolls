@@ -5,15 +5,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RollComponent } from './pages/add-roll/roll/roll.component';
 import { DatalistComponent } from './html-elements/datalist/datalist-companent/datalist.component';
 import { DatalistItemComponent } from './html-elements/datalist/datalist-item/datalist-item.component';
 import { HeaderComponent } from './html-elements/header/header.component';
 import { AuthorizationComponent } from './authorization/authorization-module/authorization.component';
 import { PrinterComponent } from './printer/printer/printer.component';
-import { AddRollComponent } from './pages/add-roll/add-roll.component';
 import { HttpService } from './http/http.service';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { OneTwoDesignComponent } from './html-elements/one-two-design/one-two-design.component';
@@ -30,14 +27,19 @@ import { TransferringRollsToWorkshopComponent } from './pages/transferring-rolls
 import { ReportThatRollIsUsedUpComponent } from './pages/report-that-roll-is-used-up/report-that-roll-is-used-up.component';
 import { HtmlForDirective } from './Directive/html-for.directive';
 import { ListOfCounterpartiesComponent } from './pages/list-of-counterparties/list-of-counterparties.component';
+import { LogsComponent } from './pages/logs/logs.component';
+import { CreateBathComponent } from './pages/create-bath/create-bath.component';
+import { ChangeBathComponent } from './pages/change-bath/change-bath.component';
+import { EditingBathComponent } from './html-elements/editing-bath/editing-bath.component';
+import { RollComponent } from './html-elements/editing-bath/roll/roll.component';
+import { MyRourerLinkDirective } from './Directive/my-rourer-link.directive';
+import { PrintingTagsForRollComponent } from './printer/components/printing-tags-for-roll/printing-tags-for-roll.component';
 
 
 @NgModule({
   declarations: [
     HomePageComponent,
     AppComponent,
-    AddRollComponent,
-    RollComponent,
     DatalistComponent,
     DatalistItemComponent,
     HeaderComponent,
@@ -57,6 +59,13 @@ import { ListOfCounterpartiesComponent } from './pages/list-of-counterparties/li
     ReportThatRollIsUsedUpComponent,
     HtmlForDirective,
     ListOfCounterpartiesComponent,
+    LogsComponent,
+    CreateBathComponent,
+    ChangeBathComponent,
+    EditingBathComponent,
+    RollComponent,
+    MyRourerLinkDirective,
+    PrintingTagsForRollComponent
   ],
   imports: [
     FormsModule,

@@ -9,8 +9,8 @@ export class AuthorizationService {
   FullAccess: boolean = false
   CanSetRollIsUsedUp: boolean = false
   get Token() {
-    let token = getCookie('token');
-    if (token == undefined) {
+    let token = localStorage.getItem('token');
+    if (token === null) {
       this.isAuthorization = false
       throw new Error();
     }
@@ -27,7 +27,7 @@ export class AuthorizationService {
     }
   }
   SetToken(value: string) {
-    setCookie('token', value, { expires: 100 });
+    localStorage.setItem('token', value);
     this.isAuthorization = true;
     this.http.SetToken(this.Token)
   }
@@ -36,12 +36,12 @@ export class AuthorizationService {
     this.http.SendGet("Authorization/UpdateToken")
       .subscribe({
         next(res: any) {
-           th.SetToken(res.Token)
-          th.FullAccess=res.FullAccess
-          th.CanSetRollIsUsedUp=res.CanSetRollIsUsedUp
+          th.SetToken(res.Token)
+          th.FullAccess = res.FullAccess
+          th.CanSetRollIsUsedUp = res.CanSetRollIsUsedUp
         },
         error(err) {
-          if (err.status === 401)
+          if (err.status === 401 || err.status === 500)
             th.isAuthorization = false;
         }
       })

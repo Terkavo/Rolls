@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { plainToInstance } from 'class-transformer';
 import { HeaderService } from 'src/app/html-elements/header/header.service';
 import { HttpService } from 'src/app/http/http.service';
-import { AutonomousRoll, BatchesOfRolls, RollStatus } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
+import { PrintService } from 'src/app/printer/print.service';
+import { AutonomousRoll, BatchOfRolls, RollStatus } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 import { ListOfRollsService } from './list-of-rolls.service';
 
 @Component({
@@ -22,12 +24,33 @@ export class ListOfRollsComponent implements OnInit {
   public SerchNotSpecified: boolean = true;
   public SearchInWarehouse: boolean = true;
   public SearchInWorkshop: boolean = true;
-  public SearchAtCounterparties: boolean = true;
-  public SearchUsedUp: boolean = true;
+  public SearchAtCounterparties: boolean = false;
+  public SearchUsedUp: boolean = false;
 
-  constructor(private header: HeaderService, public Service: ListOfRollsService,) { }
+  private IsLoadedAtCounterparties = false;
+  private IsLoadedUsedUp = false;
+
+  private SordField: string = "Id";
+  private SortUp: boolean = true
+
+  @ViewChild('body') body: ElementRef<HTMLElement>;
+
+  IsMenuOn: boolean = false;
+  MenuRoll: AutonomousRoll;
+  MenuX: number = 0;
+  MenuY: number = 0;
+
+  IsPrintingRollIsUnderway = false
+  constructor(private header: HeaderService, private Service: ListOfRollsService, private router: Router, private Printer: PrintService) { }
   ngOnInit(): void {
-    this.header.Item = "Список рулонов"
+    document.oncontextmenu = function () { return false }
+    this.header.SetItem("Список рулонов", () => {
+      this.Service.Upload(this.SearchAtCounterparties, this.SearchUsedUp).subscribe(() => this.UpdateSerch());
+      if (!this.SearchAtCounterparties)
+        this.IsLoadedAtCounterparties = false;
+      if (!this.SearchUsedUp)
+        this.IsLoadedUsedUp = false;
+    })
     let th = this
     this.Service.Upload().subscribe({
       next() {
@@ -90,5 +113,85 @@ export class ListOfRollsComponent implements OnInit {
           this.FitsRoolsArr.push(element)
       }
     }
+    this.SortRolls(true)
+  }
+  SortRolls(isNum: boolean = false) {
+    if (this.SordField === null)
+      return
+    this.FitsRoolsArr.sort((a, b) => {
+      let anyA: any = a as any;
+      let anyB: any = b as any;
+      let str = <string>anyA[<string>this.SordField]
+      let multiplier = 1
+      if (this.SortUp)
+        multiplier = -1
+      if (isNum) {
+        let num1 = (Number.parseFloat(str.replace(/[^.\d]/g, '')));
+        let num2 = Number.parseFloat(<string>anyB[<string>this.SordField].replace(/[^.\d]/g, ''))
+        if (Number.isNaN(num2))
+          return -1 * multiplier
+        if (Number.isNaN(num1))
+          return 1 * multiplier
+        if (num1 === num2)
+          return 0
+        return (num1 - num2) * multiplier
+      }
+      return str.localeCompare(<string>anyB[<string>this.SordField]) * multiplier;
+    });
+  }
+  SetSordField(val: string) {
+    if (val === this.SordField)
+      this.SortUp = !this.SortUp
+    else {
+      this.SordField = val
+      this.SortUp = false
+    }
+    if (val === "Id" || val === "Location" || val === "Quantity")
+      this.SortRolls(true)
+    else
+      this.SortRolls()
+  }
+  TryAdditionalLoading(val: string) {
+    if (val === "AtCounterparties") {
+      if (this.IsLoadedAtCounterparties)
+        return
+    }
+    else if (val === "UsedUp")
+      if (this.IsLoadedUsedUp)
+        return
+    this.Service.UploadAtCounterparties(val).subscribe(() => {
+      this.UpdateSerch();
+    })
+    if (val === "AtCounterparties")
+      this.IsLoadedAtCounterparties = true
+    else if (val === "UsedUp")
+      this.IsLoadedUsedUp = true
+
+  }
+  onRightClick(event: MouseEvent, product: AutonomousRoll) {
+    if (event.buttons !== 2) {
+      this.IsMenuOn = false;
+      return;
+    }
+    this.MenuX = event.clientX
+    this.MenuY = event.clientY
+    this.MenuRoll = product
+    this.IsMenuOn = true;
+
+  }
+  OpenBatch() {
+    this.router.navigate([`list-of-batches-of-rolls/${this.MenuRoll.OrderId}`]);
+  }
+  PrintRoll() {
+    this.IsPrintingRollIsUnderway = true
+    setTimeout(() => {
+      this.Printer.Roll = this.MenuRoll
+      this.Printer.print("roll")
+      setTimeout(()=>this.IsPrintingRollIsUnderway = false,100)
+      
+    });
+  }
+  Print(){
+    print()
   }
 }

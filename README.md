@@ -2,9 +2,9 @@
 Данный проeкт был создан для учета рулонов на швейном производстве.Он работает и посей день.
 Сейчас я Его использую для доказательства своих навыков
 
-FrontEnd:Angular
+FrontEnd:Angular, bootstrap, Angular material
 
-BackEnd:Asp.net(c#) MongoDB, bootstrap ,Angular material
+BackEnd:Asp.net(c#), MongoDB
 
 В работе его можно увидеть тут:https://myjobsearchrolls.fz-servise.ru/ Логин:123 Пароль:456
 

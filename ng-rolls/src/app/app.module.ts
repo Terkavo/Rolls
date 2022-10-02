@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
 
 import { MyInputModule } from '@terka/my-lib'
 
@@ -11,13 +12,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthorizationComponent } from './authorization/authorization-module/authorization.component';
 import { PrinterComponent } from './printer/printer/printer.component';
 import { HttpService } from './http/http.service';
-import { CommonModule } from '@angular/common';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ListOfBatchesOfRollsComponent } from './pages/list-of-batches-of-rolls/list-of-batches-of-rolls.component';
 import { BatchOfRollsComponent } from './pages/list-of-batches-of-rolls/batches-of-rolls/batch-of-rolls.component';
@@ -31,7 +30,7 @@ import { TransferringRollsToWorkshopComponent } from './pages/transferring-rolls
 import { ReportThatRollIsUsedUpComponent } from './pages/report-that-roll-is-used-up/report-that-roll-is-used-up.component';
 import { HtmlForDirective } from './Directive/html-for.directive';
 import { ListOfCounterpartiesComponent } from './pages/list-of-counterparties/list-of-counterparties.component';
-import { LogsComponent } from './pages/logs/logs.component';
+import { LogsComponent } from './pages/logs-component/logs.component';
 import { CreateBathComponent } from './pages/create-bath/create-bath.component';
 import { ChangeBathComponent } from './pages/change-bath/change-bath.component';
 import { EditingBathComponent } from './html-elements/editing-bath/editing-bath.component';

@@ -1,0 +1,16 @@
+.list-of-logs-grid-container {
+  display: grid;
+  grid-template-columns: 3em 10em 1fr 10em;
+  
+}
+.my-table{
+  min-width: 40em;
+}
+.item {
+  border: solid 1px rgb(93 93 93);
+  overflow-wrap: anywhere;
+  color: black;
+}
+.w-100{
+  overflow: auto;
+}

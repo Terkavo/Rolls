@@ -6,7 +6,8 @@
         <div class="col-6 col-md-4 col-lg-3 cell" routerLink="list-of-batches-of-rolls" *ngIf="Auth.FullAccess">
             <div class="text-center">Список пачек рулонов</div>
         </div>
-        <div class="col-6 col-md-4 col-lg-3 cell" routerLink="change-roll-quantity" *ngIf="Auth.FullAccess">
+        <div class="col-6 col-md-4 col-lg-3 cell" routerLink="change-roll-quantity"
+            *ngIf="Auth.CanSetRollIsUsedUp||Auth.FullAccess">
             <div class="text-center">Изменить "Количество в упаковке" рулона</div>
         </div>
         <div class="col-6 col-md-4 col-lg-3 cell" routerLink="specify-storage-cell" *ngIf="Auth.FullAccess">

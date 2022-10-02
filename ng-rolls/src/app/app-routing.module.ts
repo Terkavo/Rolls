@@ -9,7 +9,7 @@ import { BatchOfRollsComponent } from './pages/list-of-batches-of-rolls/batches-
 import { ListOfBatchesOfRollsComponent } from './pages/list-of-batches-of-rolls/list-of-batches-of-rolls.component';
 import { ListOfCounterpartiesComponent } from './pages/list-of-counterparties/list-of-counterparties.component';
 import { ListOfRollsComponent } from './pages/list-of-rolls/list-of-rolls.component';
-import { LogsComponent } from './pages/logs/logs.component';
+import { LogsComponent } from './pages/logs-component/logs.component';
 import { ReportThatRollIsUsedUpComponent } from './pages/report-that-roll-is-used-up/report-that-roll-is-used-up.component';
 import { SpecifyStorageCellComponent } from './pages/specify-storage-cell/specify-storage-cell.component';
 import { TransferringRollsToWorkshopComponent } from './pages/transferring-rolls-to-workshop/transferring-rolls-to-workshope.component';

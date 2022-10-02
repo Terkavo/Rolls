@@ -7,4 +7,4 @@ BackEnd:Asp.net(c#) MongoDB
 Залит на мой личный сервер. Можете там кликать на все что угодно. Я установил его  параллельно "боевому". Умею работать с VDS,nginx,docker,устанавливать SSL.
 https://spb.hh.ru/applicant/resumes/view?resume=680dc215ff0b4b70070039ed1f554c77424949
 
-использует следуюший библеотечный код https://github.com/Terkavo/my-lib
+использует следуюший библеотечный код https://github.com/Terkavo/ng-lib

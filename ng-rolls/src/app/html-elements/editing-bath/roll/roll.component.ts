@@ -9,14 +9,11 @@ export class RollComponent implements OnInit {
   @Input("Roll") RollItem: Roll;
   @Input("Index") Index: number;
 
-  public get Quantity(): string {
-    return this.RollItem.Quantity;
+  public get Quantity(): number {
+    return Number.parseFloat(this.RollItem.Quantity);
   }
-  public set Quantity(value: string) {
-    let num = Number.parseInt(value);
-    if (Number.isNaN(num))
-      return
-    this.RollItem.Quantity = value;
+  public set Quantity(value: number) {
+    this.RollItem.Quantity = value.toString();
   }
   constructor() { }
 

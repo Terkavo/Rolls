@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ChangeBathComponent } from './pages/change-bath/change-bath.component';
+import { ChangeRollQuantityComponent } from './pages/change-roll-quantity/change-roll-quantity.component';
 
 import { CreateBathComponent } from './pages/create-bath/create-bath.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
@@ -23,6 +24,7 @@ const routes: Routes = [{ path: "", component: HomePageComponent },
 { path: "specify-storage-cell", component: SpecifyStorageCellComponent },
 { path: "list-of-rolls", component: ListOfRollsComponent },
 { path: "transferring-rolls-to-workshop", component: TransferringRollsToWorkshopComponent },
+{ path: "change-roll-quantity", component: ChangeRollQuantityComponent },
 { path: "report-that-roll-is-used-up", component: ReportThatRollIsUsedUpComponent },
 { path: "list-of-counterparties", component: ListOfCounterpartiesComponent },
 { path: "logs", component: LogsComponent },

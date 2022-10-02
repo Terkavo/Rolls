@@ -8,7 +8,7 @@
         <div class="line-left"></div>
         <div class="line-right"></div>
         <div class="w-50">
-            <app-datalist [Optuons]="Counterparties" (myInput)="CounterpartyEvent=$event"> </app-datalist>
+            <app-datalist [Options]="Counterparties" (myInput)="CounterpartyEvent=$event"> </app-datalist>
             <button type="button" class="btn btn-primary mx-auto" (click)="SendToCounterparty()"
                 [disabled]="!CounterpartyEvent.IsCorrect">Передать Контрагентам</button>
         </div>

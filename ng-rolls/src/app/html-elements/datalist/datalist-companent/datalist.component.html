@@ -1,5 +1,0 @@
-<input class="form-control my-datalist" autocomplete="off" [(ngModel)]="Value" (focus)="onFocus()" #input>
-<div class="datalist-ul" #items>
-    <app-datalist-item *ngFor="let item of CorrectOptions; let i = index" [Option]="item" (click)="onClicItem(item)">
-    </app-datalist-item>
-</div>

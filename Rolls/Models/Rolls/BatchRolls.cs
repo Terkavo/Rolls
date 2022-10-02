@@ -138,5 +138,14 @@ namespace Rolls.Models.Rolls
                 .Set(c => c.Rolls[-1].IsUsedUp, true);
             await Collection.UpdateOneAsync(filter, update);
         }
+
+        internal static async Task SetRollQuantity(string id, string value, string userLogin)
+        {
+            await LogElement.AsyncConstructor(id, "SetRollQuantity", userLogin, $"\"Количество в упаковке\" рулона измененно:{value}");
+            var filter = Builders<BatchRolls>.Filter.ElemMatch(x => x.Rolls, p => p.Id == id);
+            var update = Builders<BatchRolls>.Update
+                .Set(c => c.Rolls[-1].Quantity, value);
+            await Collection.UpdateOneAsync(filter, update);
+        }
     }
 }

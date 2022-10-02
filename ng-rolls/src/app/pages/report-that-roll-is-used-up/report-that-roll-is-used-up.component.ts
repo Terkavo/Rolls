@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HeaderService } from '@terka/my-lib';
 import { Subject } from 'rxjs';
-import { HeaderService } from 'src/app/html-elements/header/header.service';
 import { HttpService } from 'src/app/http/http.service';
 import { AutonomousRoll, BatchOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 

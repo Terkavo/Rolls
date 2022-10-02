@@ -92,8 +92,7 @@ export class Roll {
   IsInWorkshop: boolean = false
   IsUsedUp: boolean | null = null
   InTheWorkshopWith: string
-  constructor(quantity: string = "") {
-    this.Quantity = quantity
+  constructor() {
   }
   toJSON() {
     return {

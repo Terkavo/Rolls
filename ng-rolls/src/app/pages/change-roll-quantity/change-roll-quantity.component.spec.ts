@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HeaderComponent } from './header.component';
+import { ChangeRollQuantityComponent } from './change-roll-quantity.component';
 
-describe('HeaderComponent', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
+describe('ChangeRollQuantityComponent', () => {
+  let component: ChangeRollQuantityComponent;
+  let fixture: ComponentFixture<ChangeRollQuantityComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
+      declarations: [ ChangeRollQuantityComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HeaderComponent);
+    fixture = TestBed.createComponent(ChangeRollQuantityComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

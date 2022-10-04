@@ -135,7 +135,8 @@ namespace Rolls.Models.Rolls
             await LogElement.AsyncConstructor(id, "ReportThatRollIsUsedUp", userLogin, "Рулон Израходован");
             var filter = Builders<BatchRolls>.Filter.ElemMatch(x => x.Rolls, p => p.Id == id);
             var update = Builders<BatchRolls>.Update
-                .Set(c => c.Rolls[-1].IsUsedUp, true);
+                .Set(c => c.Rolls[-1].IsUsedUp, true)
+                .Set(c => c.Rolls[-1].UsedUpWith, DateTime.Now);
             await Collection.UpdateOneAsync(filter, update);
         }
 

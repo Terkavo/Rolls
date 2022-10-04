@@ -11,5 +11,6 @@ namespace Rolls.Models.Rolls
         public bool IsInWorkshop { get; set; }
         public bool IsUsedUp { get; set; }
         public DateTime? InTheWorkshopWith { get; set; }
+        public DateTime? UsedUpWith { get; set; }
     }
 }

@@ -1,0 +1,20 @@
+<div class="container-lg">
+    <div class="w-100">
+        <div class="my-table">
+            <div class="list-of-logs-grid-container header">
+                <div class="item">Id</div>
+                <div class="item">Исполнитель</div>
+                <div class="item">Текст</div>
+                <div class="item">Время</div>
+            </div>
+            <div class="body">
+                <div class="list-of-logs-grid-container" *ngFor="let item of Logs">
+                    <div class="item">{{item.ParentId}}</div>
+                    <div class="item">{{item.ExecutorLogin}}</div>
+                    <div class="item">{{item.Text}}</div>
+                    <div class="item">{{item.Time|date:"dd.MM.yy H:mm:ss"}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

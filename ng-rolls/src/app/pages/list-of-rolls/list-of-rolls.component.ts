@@ -1,8 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { plainToInstance } from 'class-transformer';
-import { HeaderService } from 'src/app/html-elements/header/header.service';
-import { HttpService } from 'src/app/http/http.service';
+import { HeaderService } from '@terka/my-lib';
 import { PrintService } from 'src/app/printer/print.service';
 import { AutonomousRoll, BatchOfRolls, RollStatus } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 import { ListOfRollsService } from './list-of-rolls.service';
@@ -193,5 +191,8 @@ export class ListOfRollsComponent implements OnInit {
   }
   Print(){
     print()
+  }
+  LongClick(){
+    console.log("w")
   }
 }

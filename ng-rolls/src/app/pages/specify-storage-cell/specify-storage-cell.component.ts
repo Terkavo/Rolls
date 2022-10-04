@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { HeaderService, MyDataListInputEvent } from '@terka/my-lib';
+
 import { plainToInstance } from 'class-transformer';
 import { Subject } from 'rxjs';
-import { DataListOptions, MyDataListInputEvent } from 'src/app/html-elements/datalist/datalist-companent/datalist.component';
-import { HeaderService } from 'src/app/html-elements/header/header.service';
 import { HttpService } from 'src/app/http/http.service';
 import { AutonomousRoll, BatchOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 

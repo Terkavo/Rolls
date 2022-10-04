@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HeaderService } from 'src/app/html-elements/header/header.service';
+import { HeaderService } from '@terka/my-lib';
 import { HttpService } from 'src/app/http/http.service';
 
 @Component({

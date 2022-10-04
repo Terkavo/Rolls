@@ -6,4 +6,10 @@ declare global {
         Exists(fn: (x: T) => boolean): boolean;
         Remove(el: T): boolean;
     }
+    interface Date {
+        FormatDDMMYYYY(): string;
+    }
+    interface DateConstructor {
+        FromDDMMYYYY(val: string): Date;
+    }
 }

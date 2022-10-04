@@ -1,7 +1,9 @@
 import { Component, DoCheck, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
-import { MyDataListInputEvent } from 'src/app/html-elements/datalist/datalist-companent/datalist.component';
-import { HeaderService } from 'src/app/html-elements/header/header.service';
+import { HeaderService, MyDataListInputEvent } from '@terka/my-lib';
+
 import { HttpService } from 'src/app/http/http.service';
 import { BatchOfRolls, Roll } from 'src/app/pages/list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 import { ICounterparties } from 'src/app/pages/list-of-counterparties/list-of-counterparties.component';
@@ -12,7 +14,15 @@ import { ICounterparties } from 'src/app/pages/list-of-counterparties/list-of-co
   styleUrls: ['./editing-bath.component.scss']
 })
 export class EditingBathComponent implements OnInit {
-  QuantityRoll: number = 0;
+
+  private _QuantityRoll: number = 1;
+  public get QuantityRoll(): number {
+    return this._QuantityRoll;
+  }
+  public set QuantityRoll(value: number) {
+    this.TryChangeRolls()
+    this._QuantityRoll = value;
+  }
 
   ProviderEvent: MyDataListInputEvent;
   ColorEvent: MyDataListInputEvent;
@@ -21,7 +31,6 @@ export class EditingBathComponent implements OnInit {
   ListOfProperties: ICounterparties[] = new Array();
   UnitsOfMeasurement: string[] = ["м.п", "м.кв", "кг", "шт"]
 
-  @ViewChild('dateArrival') DateArrival: ElementRef<HTMLInputElement>;
   @Input() IsChanges: boolean = false
   @Input("Batch") InputBatch: BatchOfRolls;
 
@@ -29,30 +38,21 @@ export class EditingBathComponent implements OnInit {
   constructor(private http: HttpService, public Header: HeaderService, private router: Router) {
   }
   ngOnInit(): void {
-    setTimeout(() => this.DateArrival.nativeElement.value = this.InputBatch.GetDateArrivalToInput(), 10)
     let th = this
     this.http.SendGet(`Main/GetCounterparties`).subscribe({
       next(value) {
         th.ListOfProperties = value as ICounterparties[]
       },
     })
+    if (this.IsChanges)
+      this._Date = Date.FromDDMMYYYY(this.InputBatch.DateArrival)
+    this.TryChangeRolls()
   }
   GetListOfProperties(value: string): string[] {
     let val = this.ListOfProperties.find(x => x.Type === value)
     if (val === undefined)
       return new Array()
     return val.ListCounterparties
-  }
-  OnInputQuantityRoll(quantity: string): void {
-    let quantityRoll = Number.parseInt(quantity);
-    if (Number.isNaN(quantityRoll))
-      return;
-    if (quantityRoll < 0)
-      return;
-    if (quantityRoll > 100)
-      return
-    this.QuantityRoll = quantityRoll;
-    this.TryChangeRolls()
   }
 
   TryChangeRolls() {
@@ -86,5 +86,13 @@ export class EditingBathComponent implements OnInit {
     if (!this.IsChanges)
       return !this.UnitOfMeasurementEvent.IsCorrect || this.InputBatch.Rolls.length === 0
     return false
+  }
+  private _Date: Date
+  public get Date() {
+    return this._Date
+  }
+  public set Date(value) {
+    this._Date = value
+    this.InputBatch.DateArrival = value.FormatDDMMYYYY()
   }
 }

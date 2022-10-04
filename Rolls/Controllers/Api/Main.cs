@@ -141,5 +141,12 @@ namespace Rolls.Controllers.Api
         {
             return Ok(AuxiliaryClass.GoodJson(await LogElement.UploadList(100)));
         }
+        [Authorize(Policy = "CanSetRollIsUsedUp")]
+        [HttpGet("{id}/{value}")]
+        public async Task<IActionResult> SetRollQuantity(string id, string value)
+        {
+            await BatchRolls.SetRollQuantity(id, value, login);
+            return Ok();
+        }
     }
 }

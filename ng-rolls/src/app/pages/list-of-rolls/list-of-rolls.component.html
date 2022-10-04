@@ -2,32 +2,38 @@
     <div class="search d-print-none">
         <input class="form-control" placeholder="Поиск" [(ngModel)]="Search" (input)="UpdateSerch()">
         местоположение
-        <div class="input-group mb-3">
-            <input type="checkbox" class="btn-check" autocomplete="off" #cheak1 [(ngModel)]="SerchNotSpecified"
-                [ngModelOptions]="{standalone: true}" (change)="UpdateSerch()">
-            <label class="btn btn-outline-primary input-group-checkbox ww" appHtmlFor
-                [appHtmlForInput]="cheak1">Н/y</label>
-
-            <input type="checkbox" class="btn-check" autocomplete="off" #cheak2 [(ngModel)]="SearchInWarehouse"
-                [ngModelOptions]="{standalone: true}" (change)="UpdateSerch()">
-            <label class="btn btn-outline-primary" for="btn-check-outlined" appHtmlFor [appHtmlForInput]="cheak2">На
-                складе</label>
-
-            <input type="checkbox" class="btn-check" autocomplete="off" #cheak3 [(ngModel)]="SearchInWorkshop"
-                [ngModelOptions]="{standalone: true}" (change)="UpdateSerch()">
-            <label class="btn btn-outline-primary" for="btn-check-outlined" appHtmlFor [appHtmlForInput]="cheak3">В
-                цеху</label>
-
-            <input type="checkbox" class="btn-check" autocomplete="off" #cheak5 [(ngModel)]="SearchAtCounterparties"
-                [ngModelOptions]="{standalone: true}" (change)="UpdateSerch();TryAdditionalLoading('AtCounterparties')">
-            <label class="btn btn-outline-primary" for="btn-check-outlined" appHtmlFor [appHtmlForInput]="cheak5">У
-                контрагентов</label>
-
-            <input type="checkbox" class="btn-check" autocomplete="off" #cheak6 [(ngModel)]="SearchUsedUp"
-                [ngModelOptions]="{standalone: true}" (change)="UpdateSerch();TryAdditionalLoading('UsedUp')">
-            <label class="btn btn-outline-primary" for="btn-check-outlined" appHtmlFor
-                [appHtmlForInput]="cheak6">Израсходован</label>
-                <button class="btn btn-primary m-1 printbutton" (click)="Print()">Печать</button>
+        <div class="d-flex mb-3">
+            <div>
+                <input type="checkbox" class="btn-check" autocomplete="off" #cheak1 [(ngModel)]="SerchNotSpecified"
+                    [ngModelOptions]="{standalone: true}" (change)="UpdateSerch()">
+                <label class="btn btn-outline-primary rounded-0 rounded-start" [appHtmlFor]="cheak1">Н/y</label>
+            </div>
+            <div>
+                <input type="checkbox" class="btn-check" autocomplete="off" #cheak2 [(ngModel)]="SearchInWarehouse"
+                    [ngModelOptions]="{standalone: true}" (change)="UpdateSerch()">
+                <label class="btn btn-outline-primary rounded-0" for="btn-check-outlined" [appHtmlFor]="cheak2">На
+                    складе</label>
+            </div>
+            <div>
+                <input type="checkbox" class="btn-check" autocomplete="off" #cheak3 [(ngModel)]="SearchInWorkshop"
+                    [ngModelOptions]="{standalone: true}" (change)="UpdateSerch()">
+                <label class="btn btn-outline-primary rounded-0" for="btn-check-outlined" [appHtmlFor]="cheak3">В
+                    цеху</label>
+            </div>
+            <div>
+                <input type="checkbox" class="btn-check" autocomplete="off" #cheak5 [(ngModel)]="SearchAtCounterparties"
+                    [ngModelOptions]="{standalone: true}"
+                    (change)="UpdateSerch();TryAdditionalLoading('AtCounterparties')">
+                <label class="btn btn-outline-primary rounded-0" for="btn-check-outlined" [appHtmlFor]="cheak5">У
+                    контрагентов</label>
+            </div>
+            <div>
+                <input type="checkbox" class="btn-check" autocomplete="off" #cheak6 [(ngModel)]="SearchUsedUp"
+                    [ngModelOptions]="{standalone: true}" (change)="UpdateSerch();TryAdditionalLoading('UsedUp')">
+                <label class="btn btn-outline-primary rounded-0 rounded-end" for="btn-check-outlined"
+                    [appHtmlFor]="cheak6">Израсходован</label>
+            </div>
+            <button class="btn btn-primary m-1 printbutton" (click)="Print()">Печать</button>
         </div>
     </div>
     <div class="w-100" [ngClass]="{noprint:IsPrintingRollIsUnderway}">
@@ -39,13 +45,17 @@
                 <div class="item" (click)="SetSordField('Color')">Цвет</div>
                 <div class="item" (click)="SetSordField('Quantity')"> Количество в упаковке</div>
                 <div class="item" (click)="SetSordField('Location')">Ячейка склада</div>
-                <div class="item item_last">Дата Прихода</div>
-                <div class="item item_last">В цеху с</div>
-                <div class="item" (click)="SetSordField('Comment')">Коментарий</div>
+                <div class="item">Дата Прихода</div>
+                <div class="item">
+                    <div *ngIf="SearchInWorkshop"> В цеху с </div>
+                    <div *ngIf="SearchUsedUp"> Дата расхода </div>
+                </div>
+                <div class="item item_last" (click)="SetSordField('Comment')">Коментарий</div>
             </div>
             <div class="body">
                 <div *ngFor="let item of FitsRoolsArr;let index=index" class="roll-container">
-                    <app-roll-on-list [Roll]="item" [EvenElement]="index%2===0" (mousedown)="onRightClick($event,item)">
+                    <app-roll-on-list [Roll]="item" [EvenElement]="index%2===0" (mousedown)="onRightClick($event,item)"
+                        (drag)="LongClick()">
                     </app-roll-on-list>
                 </div>
             </div>

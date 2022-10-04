@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { plainToInstance } from 'class-transformer';
-import { HeaderService } from 'src/app/html-elements/header/header.service';
+import { HeaderService } from '@terka/my-lib';
 import { HttpService } from 'src/app/http/http.service';
 import { BatchOfRolls } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 

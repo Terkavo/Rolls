@@ -1,10 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using Rolls.Mongo;
-using System;
-using System.Diagnostics;
 using System.Text.Json.Serialization;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Rolls.Models.Rolls
 {
@@ -116,7 +113,8 @@ namespace Rolls.Models.Rolls
             await LogElement.AsyncConstructor(id, "TransferringRollsToCounterparty", userLogin, $"Перенесено контрагенту:{location}");
             var filter = Builders<BatchRolls>.Filter.ElemMatch(x => x.Rolls, p => p.Id == id);
             var update = Builders<BatchRolls>.Update
-                .Set(c => c.Rolls[-1].CounterpartyOwner, location);
+                .Set(c => c.Rolls[-1].CounterpartyOwner, location)
+                .Set(c => c.Rolls[-1].AtCounterpartiesWith, DateTime.Now);
             await Collection.UpdateOneAsync(filter, update);
         }
 

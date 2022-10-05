@@ -9,6 +9,7 @@
     <div class="item">
         <div *ngIf="!Roll.IsUsedUp">{{Roll.InTheWorkshopWith|date:'dd.MM.yy H:mm'}}</div>
         <div *ngIf="Roll.IsUsedUp">{{Roll.UsedUpWith|date:'dd.MM.yy H:mm'}}</div>
+        <div *ngIf="this.Roll.Status() === 3">{{Roll.AtCounterpartiesWith|date:'dd.MM.yy H:mm'}}</div>
     </div>
     <div class="item item_last">{{Roll.Comment}}</div>
 </div>

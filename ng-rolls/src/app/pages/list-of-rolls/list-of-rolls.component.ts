@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderService } from '@terka/my-lib';
+import { table } from 'console';
 import { PrintService } from 'src/app/printer/print.service';
 import { AutonomousRoll, BatchOfRolls, RollStatus } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
 import { ListOfRollsService } from './list-of-rolls.service';
@@ -59,7 +60,7 @@ export class ListOfRollsComponent implements OnInit {
   UpdateSerch() {
     let valuesArr = this._Search.trim().split(" ");
     let rollsArr = this.Service.GetRolls()
-    let FitsRoolsArr: AutonomousRoll[] = new Array();
+    let fitsRoolsArr: AutonomousRoll[] = new Array();
     for (let rollsIndex = 0; rollsIndex < rollsArr.length; rollsIndex++) {
       const rollElement = rollsArr[rollsIndex];
       let roolFits = true;
@@ -85,11 +86,11 @@ export class ListOfRollsComponent implements OnInit {
         }
       }
       if (roolFits)
-        FitsRoolsArr.push(rollElement);
+        fitsRoolsArr.push(rollElement);
     };
     this.FitsRoolsArr = new Array();
-    for (let index = 0; index < FitsRoolsArr.length; index++) {
-      const element = FitsRoolsArr[index];
+    for (let index = 0; index < fitsRoolsArr.length; index++) {
+      const element = fitsRoolsArr[index];
       if (element.Status() === RollStatus.NOT_SPECIFIED) {
         if (this.SerchNotSpecified)
           this.FitsRoolsArr.push(element)
@@ -112,6 +113,7 @@ export class ListOfRollsComponent implements OnInit {
       }
     }
     this.SortRolls(true)
+    this.ReCreateRealArr()
   }
   SortRolls(isNum: boolean = false) {
     if (this.SordField === null)
@@ -148,6 +150,7 @@ export class ListOfRollsComponent implements OnInit {
       this.SortRolls(true)
     else
       this.SortRolls()
+    this.ReCreateRealArr()
   }
   TryAdditionalLoading(val: string) {
     if (val === "AtCounterparties") {
@@ -185,14 +188,35 @@ export class ListOfRollsComponent implements OnInit {
     setTimeout(() => {
       this.Printer.Roll = this.MenuRoll
       this.Printer.print("roll")
-      setTimeout(()=>this.IsPrintingRollIsUnderway = false,100)
-      
+      setTimeout(() => this.IsPrintingRollIsUnderway = false, 100)
+
     });
   }
-  Print(){
+  Print() {
     print()
   }
-  LongClick(){
+  LongClick() {
     console.log("w")
+  }
+  @ViewChild('table') TableElement: ElementRef<HTMLElement>;
+  public RealRoolsArr: AutonomousRoll[] = new Array()
+
+  ReCreateRealArr() {
+    this.TableElement.nativeElement.scrollTop = 0;
+    this.RealRoolsArr = new Array();
+    for (let i = 0; i < 15; i++) {
+      if (this.FitsRoolsArr[i] === undefined) return;
+      this.RealRoolsArr.push(this.FitsRoolsArr[i])
+    }
+    setTimeout(() => this.onScrollUl())
+  }
+
+  onScrollUl() {
+    let bottom = this.TableElement.nativeElement.scrollHeight
+    let clientHeight = this.TableElement.nativeElement.scrollTop + 800
+    if (bottom > clientHeight) return;
+    if (this.FitsRoolsArr[this.RealRoolsArr.length] === undefined) return;
+    this.RealRoolsArr.push(this.FitsRoolsArr[this.RealRoolsArr.length])
+    setTimeout(() => this.onScrollUl())
   }
 }

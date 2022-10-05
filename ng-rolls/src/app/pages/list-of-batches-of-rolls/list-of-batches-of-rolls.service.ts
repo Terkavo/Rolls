@@ -92,7 +92,8 @@ export class Roll {
   IsInWorkshop: boolean = false
   IsUsedUp: boolean | null = null
   UsedUpWith: string | null = null
-  InTheWorkshopWith: string| null = null
+  InTheWorkshopWith: string | null = null
+  AtCounterpartiesWith: string | null = null
   constructor() {
   }
   toJSON() {
@@ -109,8 +110,9 @@ export class AutonomousRoll {
   CounterpartyOwner: string | null;
   IsInWorkshop: boolean;
   IsUsedUp: boolean | null = null
-  InTheWorkshopWith: string| null = null
+  InTheWorkshopWith: string | null = null
   UsedUpWith: string | null = null
+  AtCounterpartiesWith: string | null = null
 
   OrderId: string
   DateArrival: string
@@ -129,6 +131,7 @@ export class AutonomousRoll {
     this.IsInWorkshop = roll.IsInWorkshop
     this.InTheWorkshopWith = roll.InTheWorkshopWith;
     this.UsedUpWith = roll.UsedUpWith;
+    this.AtCounterpartiesWith = roll.AtCounterpartiesWith;
 
     this.OrderId = batches.Id
     this.DateArrival = batches.DateArrival

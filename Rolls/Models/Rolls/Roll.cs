@@ -1,7 +1,9 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 
 namespace Rolls.Models.Rolls
 {
+    [BsonIgnoreExtraElements]
     public class Roll
     {
         public string Id { get; set; }
@@ -12,5 +14,6 @@ namespace Rolls.Models.Rolls
         public bool IsUsedUp { get; set; }
         public DateTime? InTheWorkshopWith { get; set; }
         public DateTime? UsedUpWith { get; set; }
+        public DateTime? AtCounterpartiesWith { get; set; }
     }
 }

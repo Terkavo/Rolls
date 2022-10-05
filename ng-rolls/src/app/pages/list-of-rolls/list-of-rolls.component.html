@@ -36,28 +36,27 @@
             <button class="btn btn-primary m-1 printbutton" (click)="Print()">Печать</button>
         </div>
     </div>
-    <div class="w-100" [ngClass]="{noprint:IsPrintingRollIsUnderway}">
-        <div class="my-table">
-            <div class="list-of-rolls-grid-container header">
-                <div class="item" (click)="SetSordField('Id')">Id</div>
-                <div class="item" (click)="SetSordField('Provider')">Поставщик</div>
-                <div class="item" (click)="SetSordField('Material')">Материал</div>
-                <div class="item" (click)="SetSordField('Color')">Цвет</div>
-                <div class="item" (click)="SetSordField('Quantity')"> Количество в упаковке</div>
-                <div class="item" (click)="SetSordField('Location')">Ячейка склада</div>
-                <div class="item">Дата Прихода</div>
-                <div class="item">
-                    <div *ngIf="SearchInWorkshop"> В цеху с </div>
-                    <div *ngIf="SearchUsedUp"> Дата расхода </div>
-                </div>
-                <div class="item item_last" (click)="SetSordField('Comment')">Коментарий</div>
+    <div class=" w-100 my-table" #table (scroll)="onScrollUl()" [ngClass]="{noprint:IsPrintingRollIsUnderway}">
+        <div class="list-of-rolls-grid-container header">
+            <div class="item" (click)="SetSordField('Id')">Id</div>
+            <div class="item" (click)="SetSordField('Provider')">Поставщик</div>
+            <div class="item" (click)="SetSordField('Material')">Материал</div>
+            <div class="item" (click)="SetSordField('Color')">Цвет</div>
+            <div class="item" (click)="SetSordField('Quantity')"> Количество в упаковке</div>
+            <div class="item" (click)="SetSordField('Location')">Ячейка склада</div>
+            <div class="item">Дата Прихода</div>
+            <div class="item">
+                <div *ngIf="SearchInWorkshop"> В цеху с </div>
+                <div *ngIf="SearchUsedUp"> Дата расхода </div>
+                <div *ngIf="SearchAtCounterparties"> У контрагента с</div>
             </div>
-            <div class="body">
-                <div *ngFor="let item of FitsRoolsArr;let index=index" class="roll-container">
-                    <app-roll-on-list [Roll]="item" [EvenElement]="index%2===0" (mousedown)="onRightClick($event,item)"
-                        (drag)="LongClick()">
-                    </app-roll-on-list>
-                </div>
+            <div class="item item_last" (click)="SetSordField('Comment')">Коментарий</div>
+        </div>
+        <div class="body">
+            <div *ngFor="let item of RealRoolsArr;let index=index" class="roll-container">
+                <app-roll-on-list [Roll]="item" [EvenElement]="index%2===0" (mousedown)="onRightClick($event,item)"
+                    (drag)="LongClick()">
+                </app-roll-on-list>
             </div>
         </div>
     </div>

@@ -20,9 +20,11 @@
 .w-100 {
     overflow: auto;
     max-width: 100%;
+    border-top: 1px solid rgb(0 0 0);
+    border-bottom: 1px solid rgb(0 0 0);
 }
 
-.body {
+.t-body {
     page-break-inside: auto;
 }
 
@@ -51,4 +53,8 @@
 
 .my-table {
     height: calc(100vh - 12rem);
+
+    @media(max-width:420px) {
+        height: calc(100vh - 18rem);
+    }
 }

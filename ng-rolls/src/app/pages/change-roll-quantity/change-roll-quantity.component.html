@@ -4,7 +4,7 @@
     <div class="content block-center-parent" *ngIf="Roll!==null">
         <div class="block-center">
             <div class="d-flex">
-                <input class="form-control" [(ngModel)]="Value" type="number" />
+                <app-my-input-number [(MyNgModel)]="Value" [IsAllowFloat]="true"></app-my-input-number>
                 <app-datalist [Options]="UnitsOfMeasurement" (myInput)="UnitOfMeasurementEvent=$event"
                     [Value]="UnitOfMeasurement"></app-datalist>
             </div>

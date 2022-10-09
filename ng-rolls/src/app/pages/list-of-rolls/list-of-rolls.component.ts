@@ -1,6 +1,7 @@
+import { query } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { HeaderService } from '@terka/my-lib';
+import { HeaderService, HtmlForDirective } from '@terka/my-lib';
 import { table } from 'console';
 import { PrintService } from 'src/app/printer/print.service';
 import { AutonomousRoll, BatchOfRolls, RollStatus } from '../list-of-batches-of-rolls/list-of-batches-of-rolls.service';
@@ -43,6 +44,7 @@ export class ListOfRollsComponent implements OnInit {
   constructor(private header: HeaderService, private Service: ListOfRollsService, private router: Router, private Printer: PrintService) { }
   ngOnInit(): void {
     document.oncontextmenu = function () { return false }
+    document.querySelector("html")!.style.overflow = "hidden"
     this.header.SetItem("Список рулонов", () => {
       this.Service.Upload(this.SearchAtCounterparties, this.SearchUsedUp).subscribe(() => this.UpdateSerch());
       if (!this.SearchAtCounterparties)
@@ -213,7 +215,7 @@ export class ListOfRollsComponent implements OnInit {
 
   onScrollUl() {
     let bottom = this.TableElement.nativeElement.scrollHeight
-    let clientHeight = this.TableElement.nativeElement.scrollTop + 800
+    let clientHeight = this.TableElement.nativeElement.scrollTop + 1500
     if (bottom > clientHeight) return;
     if (this.FitsRoolsArr[this.RealRoolsArr.length] === undefined) return;
     this.RealRoolsArr.push(this.FitsRoolsArr[this.RealRoolsArr.length])

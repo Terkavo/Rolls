@@ -12,7 +12,7 @@ import { AutonomousRoll } from '../list-of-batches-of-rolls/list-of-batches-of-r
 export class ChangeRollQuantityComponent implements OnInit {
   ThrowOffEvent: Subject<void> = new Subject<void>();
   Roll: AutonomousRoll | null = null;
-  Value: string;
+  Value: number;
   UnitOfMeasurement: string = ""
 
   UnitOfMeasurementEvent: MyDataListInputEvent;
@@ -24,12 +24,10 @@ export class ChangeRollQuantityComponent implements OnInit {
     this.header.SetItem("Изменить \"Количество в упаковке\" рулона")
   }
   UpdateRoll(roll: AutonomousRoll): void {
-    this.Value = roll.Quantity.replace(/[^.\d]/g, '')
-    if (this.Value[this.Value.length - 1] === ".")
-      this.Value = this.Value.substring(0, this.Value.length - 1)
+    this.Value = Number.parseFloat(roll.Quantity.replace(/[^.\d]/g, ''))
     this.UnitOfMeasurement = roll.Quantity.replace(/[0-9]/g, '')
     if (this.UnitOfMeasurement[0] === ".")
-      this.UnitOfMeasurement = this.UnitOfMeasurement.substring(1, this.Value.length)
+      this.UnitOfMeasurement = this.UnitOfMeasurement.substring(1, this.Value.toString().length)
     this.Roll = roll;
   }
   Send() {

@@ -93,6 +93,8 @@ export class EditingBathComponent implements OnInit {
   }
   public set Date(value) {
     this._Date = value
-    this.InputBatch.DateArrival = value.FormatDDMMYYYY()
+    try {
+      this.InputBatch.DateArrival = value.FormatDDMMYYYY()
+    } catch { }
   }
 }

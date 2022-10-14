@@ -31,7 +31,8 @@ namespace Rolls.Controllers.Api
                 notBefore: now,
                 claims: identity.Claims,
                 expires: now.Add(TimeSpan.FromDays(AuthOptions.LIFETIMEDAY)),
-                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
+                    SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
             return Ok(AuxiliaryClass.GoodJson(new
             {
@@ -45,7 +46,7 @@ namespace Rolls.Controllers.Api
         [Authorize]
         public async Task<IActionResult> UpdateToken()
         {
-            MyUser user=null;
+            MyUser user = null;
             try
             {
                 user = await MyUser.UploadByLogin(User.FindFirst(c => c.Type == "Login").Value);

@@ -10,7 +10,8 @@ import { MyInputModule } from '@terka/my-lib'
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS, } from '@angular/material-moment-adapter';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,7 +37,6 @@ import { EditingBathComponent } from './html-elements/editing-bath/editing-bath.
 import { RollComponent } from './html-elements/editing-bath/roll/roll.component';
 import { PrintingTagsForRollComponent } from './printer/components/printing-tags-for-roll/printing-tags-for-roll.component';
 import { ChangeRollQuantityComponent } from './pages/change-roll-quantity/change-roll-quantity.component';
-
 
 
 @NgModule({
@@ -78,7 +78,13 @@ import { ChangeRollQuantityComponent } from './pages/change-roll-quantity/change
     MatFormFieldModule,
     MatInputModule,
   ],
-  providers: [HttpService,{ provide: MAT_DATE_LOCALE, useValue: 'ru-Ru' }],
+  providers: [HttpService, { provide: MAT_DATE_LOCALE, useValue: 'ru' },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

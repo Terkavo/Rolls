@@ -195,7 +195,8 @@ export class ListOfRollsComponent implements OnInit {
     });
   }
   Print() {
-    print()
+    this.RealRoolsArr=this.FitsRoolsArr
+    setTimeout(print);
   }
   LongClick() {
     console.log("w")

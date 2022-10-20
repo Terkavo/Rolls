@@ -14,21 +14,22 @@ import { ReportThatRollIsUsedUpComponent } from './pages/report-that-roll-is-use
 import { SpecifyStorageCellComponent } from './pages/specify-storage-cell/specify-storage-cell.component';
 import { TransferringRollsToWorkshopComponent } from './pages/transferring-rolls-to-workshop/transferring-rolls-to-workshope.component';
 
-const routes: Routes = [{ path: "", component: HomePageComponent },
-{ path: "create-bath", component: CreateBathComponent },
-{ path: "change-bath/:id", component: ChangeBathComponent },
-{
-  path: "list-of-batches-of-rolls", component: ListOfBatchesOfRollsComponent, children: [
-    { path: ":id", component: BatchOfRollsComponent }],
-},
-{ path: "specify-storage-cell", component: SpecifyStorageCellComponent },
-{ path: "list-of-rolls", component: ListOfRollsComponent },
-{ path: "transferring-rolls-to-workshop", component: TransferringRollsToWorkshopComponent },
-{ path: "change-roll-quantity", component: ChangeRollQuantityComponent },
-{ path: "report-that-roll-is-used-up", component: ReportThatRollIsUsedUpComponent },
-{ path: "list-of-counterparties", component: ListOfCounterpartiesComponent },
-{ path: "logs", component: LogsComponent },
-{ path: "**",   redirectTo: ""}
+const routes: Routes = [
+  { path: "", component: HomePageComponent },
+  { path: "create-bath", component: CreateBathComponent },
+  { path: "change-bath/:id", component: ChangeBathComponent },
+  {
+    path: "list-of-batches-of-rolls", component: ListOfBatchesOfRollsComponent, children: [
+      { path: ":id", component: BatchOfRollsComponent }],
+  },
+  { path: "specify-storage-cell", component: SpecifyStorageCellComponent },
+  { path: "list-of-rolls", component: ListOfRollsComponent },
+  { path: "transferring-rolls-to-workshop", component: TransferringRollsToWorkshopComponent },
+  { path: "change-roll-quantity", component: ChangeRollQuantityComponent },
+  { path: "report-that-roll-is-used-up", component: ReportThatRollIsUsedUpComponent },
+  { path: "list-of-counterparties", component: ListOfCounterpartiesComponent },
+  { path: "logs", component: LogsComponent },
+  { path: "**", redirectTo: "" }
 ];
 
 @NgModule({

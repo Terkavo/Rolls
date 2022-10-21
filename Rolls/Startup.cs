@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using CompressedStaticFiles;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.WebEncoders;
 using Microsoft.IdentityModel.Tokens;
 using Rolls.Auxiliary.AntiBruteforce;
@@ -18,6 +20,7 @@ namespace Rolls
         public IConfiguration Configuration { get; }
         public void Configure(IApplicationBuilder app, ILogger<Startup> logger)
         {
+            app.UseResponseCompression();
             app.UseMiddleware<AntiBruteforceMiddleware>();
             app.UseStaticFiles(new StaticFileOptions()
             {
@@ -34,16 +37,9 @@ namespace Rolls
             {
                 endpoints.MapControllers();
             });
-            app.Use(async (context, next) =>
+            app.UseSpa(spa =>
             {
-                logger.LogInformation(context.Request.HttpContext.Connection.RemoteIpAddress.ToString());
-                await next.Invoke();
-                if (context.Response.StatusCode==404&&!context.Request.Path.Value.StartsWith("/Api"))
-                {
-                    context.Response.StatusCode=200;
-                    context.Response.Headers.Add("Cache-Control", "public,no-store");
-                    await context.Response.SendFileAsync("wwwroot/index.html");
-                }
+                spa.Options.SourcePath = "wwwroot";
             });
         }
         public void ConfigureServices(IServiceCollection services)
@@ -97,6 +93,10 @@ namespace Rolls
                     AllowCredentials()));
             services.AddControllersWithViews();
             services.AddSignalR();
+            services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+            });
         }
     }
 }

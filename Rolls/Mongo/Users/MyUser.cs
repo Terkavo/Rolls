@@ -1,11 +1,10 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Driver;
 using System.Security.Claims;
 
 namespace Rolls.Mongo
 {
-    public class MyUser 
+    public class MyUser
     {
         [BsonId]
         public BsonObjectId Id { get; set; }
@@ -20,6 +19,6 @@ namespace Rolls.Mongo
                 return new List<Claim>() { new Claim("Login", Login) };
             }
         }
-        
+
     }
 }

@@ -1,7 +1,5 @@
-﻿using DnsClient;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using Rolls.Models.Rolls;
 
@@ -11,7 +9,7 @@ namespace Rolls.Controllers.Api;
 [Route("Api/[controller]/[action]")]
 [Authorize]
 
-public class BatchOfRollsController:ControllerBase
+public class BatchOfRollsController : ControllerBase
 {
     private readonly BatchRollsService _BatchRollsService;
     private string _Login

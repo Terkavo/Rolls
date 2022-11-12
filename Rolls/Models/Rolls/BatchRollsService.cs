@@ -2,9 +2,6 @@
 using Rolls.Models.LogsFolder;
 using Rolls.Mongo;
 using Rolls.Mongo.ProdgectInfoFolder;
-using System.Drawing;
-using System.Web.Razor.Parser.SyntaxTree;
-using System.Xml.Linq;
 
 namespace Rolls.Models.Rolls
 {

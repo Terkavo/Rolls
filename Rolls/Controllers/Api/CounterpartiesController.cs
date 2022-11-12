@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Rolls.Models.Rolls;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Rolls.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Rolls.Controllers.Api;
 [ApiController]

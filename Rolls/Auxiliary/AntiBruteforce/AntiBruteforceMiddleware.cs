@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Rolls.Auxiliary.AntiBruteforce
+﻿namespace Rolls.Auxiliary.AntiBruteforce
 {
     public class AntiBruteforceMiddleware
     {

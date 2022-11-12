@@ -1,11 +1,9 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Driver;
-using Rolls.Mongo;
 using System.Text.Json.Serialization;
 
 namespace Rolls.Models.Rolls
 {
-    public class BatchRolls 
+    public class BatchRolls
     {
         [BsonId]
         public string Id { get; set; }

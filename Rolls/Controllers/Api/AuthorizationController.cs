@@ -1,10 +1,10 @@
-﻿using Rolls.Auxiliary.AntiBruteforce;
-using Rolls.Mongo;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+using Rolls.Auxiliary.AntiBruteforce;
+using Rolls.Mongo;
 using Rolls.Mongo.Users;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Rolls.Controllers.Api;
 

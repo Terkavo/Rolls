@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
+﻿using System.Text.Encodings.Web;
 using System.Text.Json;
 
 namespace Rolls.Auxiliary
@@ -13,7 +12,7 @@ namespace Rolls.Auxiliary
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                 WriteIndented = true
             };
-            string ret= JsonSerializer.Serialize(value, options);
+            string ret = JsonSerializer.Serialize(value, options);
             return ret;
         }
         public static DateTime FromJsData(ulong data)

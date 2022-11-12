@@ -1,9 +1,8 @@
-﻿using MongoDB.Driver;
-using Rolls.Mongo;
+﻿using Rolls.Mongo;
 
 namespace Rolls.Models.LogsFolder
 {
-    public class LogsService:Downloadable<LogElement>
+    public class LogsService : Downloadable<LogElement>
     {
         public LogsService(MongoService mongo)
         {

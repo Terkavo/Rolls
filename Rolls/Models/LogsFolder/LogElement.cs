@@ -14,7 +14,7 @@ namespace Rolls.Models
         public string Text { get; set; }
         public DateTime Time { get; set; } = DateTime.Now;
 
-        public LogElement(string parentId,string name, string executorLogin, string text)
+        public LogElement(string parentId, string name, string executorLogin, string text)
         {
             ParentId=parentId;
             Name=name;

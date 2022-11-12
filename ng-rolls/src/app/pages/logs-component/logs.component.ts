@@ -15,7 +15,7 @@ export class LogsComponent implements OnInit {
   Upload(): Observable<void> {
     let th = this
     return new Observable(observer => {
-      this.http.SendGet("Main/GetLogs").subscribe({
+      this.http.SendGet("Logs/Get").subscribe({
         next(value: any) {
           th.Logs = value;
           observer.next()

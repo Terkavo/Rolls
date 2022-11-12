@@ -18,7 +18,7 @@ export class CreateBathComponent implements OnInit {
   }
   onSave() {
     let th = this
-    this.http.SendPost(`Main/SaveBatchRolls`, th.Batch).subscribe({
+    this.http.SendPost(`BatchOfRolls/Add`, th.Batch).subscribe({
       next(value: any) {
         th.router.navigate([`list-of-batches-of-rolls/${value.id}`]);
       },

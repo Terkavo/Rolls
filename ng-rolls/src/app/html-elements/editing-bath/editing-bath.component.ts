@@ -39,7 +39,7 @@ export class EditingBathComponent implements OnInit {
   }
   ngOnInit(): void {
     let th = this
-    this.http.SendGet(`Main/GetCounterparties`).subscribe({
+    this.http.SendGet(`Counterparties/GetAll`).subscribe({
       next(value) {
         th.ListOfProperties = value as ICounterparties[]
       },

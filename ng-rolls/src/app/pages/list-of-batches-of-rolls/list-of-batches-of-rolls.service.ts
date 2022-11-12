@@ -15,7 +15,7 @@ export class ListOfBatchesOfRollsService {
   async Update() {
     return new Promise<void>(resolve => {
       let th = this
-      this.http.SendGet("Main/GetBatchesOfRolls").subscribe({
+      this.http.SendGet("BatchOfRolls/GetMany").subscribe({
         next(value: any) {
           let batches = plainToInstance(BatchOfRolls, value as Array<any>)
           batches.forEach(element => {

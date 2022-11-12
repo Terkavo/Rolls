@@ -6,6 +6,12 @@ using Microsoft.Extensions.WebEncoders;
 using Microsoft.IdentityModel.Tokens;
 using Rolls.Auxiliary.AntiBruteforce;
 using Rolls.Controllers.Outh;
+using Rolls.Models;
+using Rolls.Models.LogsFolder;
+using Rolls.Models.Rolls;
+using Rolls.Mongo;
+using Rolls.Mongo.ProdgectInfoFolder;
+using Rolls.Mongo.Users;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
@@ -18,7 +24,7 @@ namespace Rolls
             Configuration = configuration;
         }
         public IConfiguration Configuration { get; }
-        public void Configure(IApplicationBuilder app, ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app)
         {
             app.UseResponseCompression();
             app.UseMiddleware<AntiBruteforceMiddleware>();
@@ -92,11 +98,17 @@ namespace Rolls
                     AllowAnyHeader().
                     AllowCredentials()));
             services.AddControllersWithViews();
-            services.AddSignalR();
             services.AddResponseCompression(options =>
             {
                 options.EnableForHttps = true;
             });
+
+            services.AddSingleton<MyUserServise>();
+            services.AddSingleton<CounterpartiesService>();
+            services.AddSingleton<ProjectInfoService>();
+            services.AddSingleton<BatchRollsService>();
+            services.AddSingleton<MongoService>();
+            services.AddSingleton<LogsService>();
         }
     }
 }

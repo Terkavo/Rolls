@@ -19,7 +19,7 @@ export class TransferringRollsToWorkshopComponent implements OnInit {
   ngOnInit(): void {
     this.header.SetItem("Перенос рулонов в цех")
     let th = this
-    this.http.SendGet(`Main/GetCounterparty/Out`).subscribe({
+    this.http.SendGet(`Counterparties/GetOneType/Out`).subscribe({
       next(value) {
         th.Counterparties = value as string[]
       },
@@ -27,7 +27,7 @@ export class TransferringRollsToWorkshopComponent implements OnInit {
   }
   SetRollLocation() {
     let th = this
-    this.http.SendGet(`Main/TransferringRollsToWarehouse/${this.Roll!.Id}`).subscribe({
+    this.http.SendGet(`Rolls/TransferringToWarehouse/${this.Roll!.Id}`).subscribe({
       next() {
         th.Roll = null;
         th.ThrowOffEvent.next();
@@ -36,7 +36,7 @@ export class TransferringRollsToWorkshopComponent implements OnInit {
   }
   SendToCounterparty() {
     let th = this
-    this.http.SendGet(`Main/TransferringRollsToCounterparty/${this.Roll!.Id}/${this.CounterpartyEvent.Value}`).subscribe({
+    this.http.SendGet(`Rolls/TransferringToCounterparty/${this.Roll!.Id}/${this.CounterpartyEvent.Value}`).subscribe({
       next() {
         th.Roll = null;
         th.ThrowOffEvent.next();

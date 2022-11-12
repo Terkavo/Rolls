@@ -20,7 +20,7 @@ export class ListOfCounterpartiesComponent implements OnInit {
   ngOnInit(): void {
     this.header.SetItem("Редактирование: Контрагенты, Цвета, Материалы")
     let th = this
-    this.http.SendGet(`Main/GetCounterparties`).subscribe({
+    this.http.SendGet(`Counterparties/GetAll`).subscribe({
       next(value: any) {
         th.Titles = value
         th.IsReadyForRendering = true
@@ -29,7 +29,7 @@ export class ListOfCounterpartiesComponent implements OnInit {
   }
   Add() {
     let th = this
-    this.http.SendGet(`Main/AddCounterparty/${this.Type}/${this.Title}`).subscribe({
+    this.http.SendGet(`Counterparties/Add/${this.Type}/${this.Title}`).subscribe({
       next() {
         th.CurrentCounterparty.ListCounterparties.unshift(th.Title);
         th.Title = "";

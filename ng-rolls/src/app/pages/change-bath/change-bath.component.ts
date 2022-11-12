@@ -26,7 +26,7 @@ export class ChangeBathComponent implements OnInit {
   }
   Uploade() {
     let th = this;
-    this.http.SendGet(`Main/GetBatchOfRolls/${this.Id}`).subscribe({
+    this.http.SendGet(`BatchOfRolls/GetOne/${this.Id}`).subscribe({
       next(value: any) {
         th.Batch = plainToInstance(BatchOfRolls, value);
         th.Batch.ToClass();
@@ -36,7 +36,7 @@ export class ChangeBathComponent implements OnInit {
   }
   onSave() {
     let th = this;
-    this.http.SendPost(`Main/UpdateBatchOfRolls`,this.Batch).subscribe({
+    this.http.SendPost(`BatchOfRolls/Update`,this.Batch).subscribe({
       next() {
         th.router.navigate([`/list-of-batches-of-rolls/${th.Batch.Id}`])
       }

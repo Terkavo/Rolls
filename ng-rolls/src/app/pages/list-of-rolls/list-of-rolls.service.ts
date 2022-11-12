@@ -13,7 +13,7 @@ export class ListOfRollsService {
   Upload(IsGetCounterparties: boolean = false, IsGetUsedUp: boolean = false): Observable<void> {
     let th = this
     return new Observable(observer => {
-      this.http.SendGet(`Main/GetBatchesOfRolls/?IsAtCounterparties=${IsGetCounterparties}&IsGetUsedUp=${IsGetUsedUp}`).subscribe({
+      this.http.SendGet(`BatchOfRolls/GetMany/?IsAtCounterparties=${IsGetCounterparties}&IsGetUsedUp=${IsGetUsedUp}`).subscribe({
         next(value) {
           let batches = plainToInstance(BatchOfRolls, value as Array<any>)
           batches.forEach(element => {
@@ -28,7 +28,7 @@ export class ListOfRollsService {
   UploadAtCounterparties(value: string) {
     let th = this
     return new Observable(observer => {
-      this.http.SendGet(`Main/GetBatchesOfRollsOnly/${value}`).subscribe({
+      this.http.SendGet(`BatchOfRolls/GetOnlyOneType/${value}`).subscribe({
         next(value) {
           let batches = plainToInstance(BatchOfRolls, value as Array<any>)
           batches.forEach(element => {

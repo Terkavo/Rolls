@@ -21,7 +21,7 @@ export class ReportThatRollIsUsedUpComponent implements OnInit {
   }
   SetRollLocation() {
     let th = this
-    this.http.SendGet(`Main/ReportThatRollIsUsedUp/${this.Roll!.Id}`).subscribe({
+    this.http.SendGet(`Rolls/SetUsedUpTrue/${this.Roll!.Id}`).subscribe({
       next() {
         th.Roll = null;
         th.ThrowOffEvent.next();

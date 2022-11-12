@@ -1,4 +1,6 @@
-﻿namespace Rolls.Auxiliary.AntiBruteforce
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace Rolls.Auxiliary.AntiBruteforce
 {
     public class AntiBruteforceMiddleware
     {
@@ -17,7 +19,7 @@
             if (AntiBruteforceManager.IsAllowedToProvideContent(ip))
                 await next.Invoke(context);
             else
-                context.Abort();
+                context.Response.StatusCode = 500;
         }
     }
 }

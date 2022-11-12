@@ -51,7 +51,7 @@ export class RoolLoaderComponent implements OnInit {
   }
   getRoll() {
     let th = this;
-    this.http.SendGet(`Main/GetRoll/R-${this.Value}`).subscribe({
+    this.http.SendGet(`Rolls/Get/R-${this.Value}`).subscribe({
       next(value: any) {
         th.IsLoaded = true
         let batch = plainToInstance(BatchOfRolls, value)

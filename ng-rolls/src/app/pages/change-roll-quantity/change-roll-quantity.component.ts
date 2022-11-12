@@ -33,7 +33,7 @@ export class ChangeRollQuantityComponent implements OnInit {
   Send() {
     let th = this
     let FillQuantity = this.Value + this.UnitOfMeasurementEvent.Value
-    this.http.SendGet(`Main/SetRollQuantity/${this.Roll!.Id}/${FillQuantity}`).subscribe({
+    this.http.SendGet(`Rolls/SetQuantity/${this.Roll!.Id}/${FillQuantity}`).subscribe({
       next() {
         th.Roll = null;
         th.ThrowOffEvent.next();

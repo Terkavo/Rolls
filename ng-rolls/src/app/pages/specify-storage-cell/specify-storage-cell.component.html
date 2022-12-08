@@ -2,7 +2,10 @@
     <app-rool-loader (uploaded)="Roll=$event" (badlyUploaded)="Roll=null"
         [ThrowOffEvent]="ThrowOffEvent.asObservable()"></app-rool-loader>
     <div class="content" *ngIf="Roll!==null">
-        <div class="alert alert-warning" *ngIf="Roll!==null&&Roll!.CellInWarehouse!==null">
+        <div class="alert alert-warning" *ngIf="Roll!.IsInWorkshop===true">
+            местоположение данного рулона уже указанно как:Цех, но вы можете изменить его
+            местоположение</div>
+        <div class="alert alert-warning" *ngIf="Roll!.CellInWarehouse!==null&&Roll!.IsInWorkshop===false">
             местоположение данного рулона уже указанно как:{{Roll!.CellInWarehouse}}, но вы можете изменить его
             местоположение</div>
         <app-datalist [Options]="Locations" (myInput)="LocationEvent=$event"></app-datalist>

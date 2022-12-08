@@ -5,6 +5,7 @@
 }
 
 app-printer {
+    width: 21cm;
     display: none;
 
     @media print {

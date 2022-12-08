@@ -25,7 +25,7 @@ export class SpecifyStorageCellComponent implements OnInit {
   }
   SetRollLocation() {
     let th = this
-    this.http.SendGet(`Rolls/SetLocation/${this.Roll!.Id}/${this.LocationEvent.Value}`).subscribe({
+    this.http.SendGet(`Rolls/SetStorageCell/${this.Roll!.Id}/${this.LocationEvent.Value}`).subscribe({
       next() {
         th.Roll = null;
         th.ThrowOffEvent.next();

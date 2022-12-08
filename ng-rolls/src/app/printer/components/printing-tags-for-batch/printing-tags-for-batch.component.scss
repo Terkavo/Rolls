@@ -1,14 +1,20 @@
 .my-container {
-    width: 21cm;
+    width: 100%;
+}
+
+.container-element {
+    display: inline-block;
+    width: 50%;
 }
 
 .element {
-    width: 50%;
     display: flex;
     border: solid 1px;
     page-break-inside: avoid;
-    page-break-after: always;
+    page-break-after: auto;
 }
+
+
 
 .qr {
     width: 40%;
@@ -26,6 +32,6 @@
     font-size: 1.2em;
 }
 
-.d-flex{
+.d-flex {
     page-break-inside: auto;
 }

@@ -76,7 +76,8 @@ namespace Rolls.Models.Rolls
             await _LogsService.Create(id, "OnUpdateBatch", login, $"Размещен на складе:{location}");
             var filter = Builders<BatchRolls>.Filter.ElemMatch(x => x.Rolls, p => p.Id == id);
             var update = Builders<BatchRolls>.Update
-                .Set(c => c.Rolls[-1].CellInWarehouse, location);
+                .Set(c => c.Rolls[-1].CellInWarehouse, location)
+                .Set(c => c.Rolls[-1].IsInWorkshop, false);
             await _Collection.UpdateOneAsync(filter, update);
         }
 

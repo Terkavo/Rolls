@@ -12,8 +12,8 @@ export class PrintService {
   print(type: string) {
     this.ElementToPrint = type
     setTimeout(() => {
-      print(); 
-      this.ElementToPrint = "";
-    }, 100);
+      print();
+      setTimeout(() => this.ElementToPrint = "",3000)
+    }, 10);
   }
 }

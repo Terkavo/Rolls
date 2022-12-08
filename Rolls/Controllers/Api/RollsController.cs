@@ -36,7 +36,7 @@ public class RollsController : ControllerBase
 
     [Authorize(Policy = "FullAccess")]
     [HttpGet("{id}/{location}")]
-    public async Task<IActionResult> SetLocation(string id, string location)
+    public async Task<IActionResult> SetStorageCell(string id, string location)
     {
         await _BatchRollsService.SetRollLocation(id, location, _Login);
         return Ok();

@@ -1,7 +1,7 @@
 <div class="my-container">
-    <div *ngFor="let list of Lists;let index=index" class="list ">
-        <div class="d-flex flex-wrap">
-            <div *ngFor="let roll of list.Rolls;let index=index" class="element">
+    <div class=" flex-wrap">
+        <div *ngFor="let roll of Rolls" class="container-element">
+            <div class="element">
                 <div class="data">
                     <div class="data mx-auto">{{roll.DateArrival}}</div>
                     <div class="flex-break"></div>
@@ -17,6 +17,5 @@
                 </div>
             </div>
         </div>
-        <div class="pagebreak"> </div>
     </div>
 </div>

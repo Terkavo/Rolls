@@ -27,6 +27,7 @@
     "@types/qrcode": "^1.5.0",
     "@zxing/library": "^0.19.1",
     "class-transformer": "^0.5.1",
+    "fuse.js": "^6.6.2",
     "moment": "^2.29.4",
     "qrcode": "^1.5.1",
     "rxjs": "~7.5.0",

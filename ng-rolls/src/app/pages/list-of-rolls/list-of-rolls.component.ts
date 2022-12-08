@@ -1,5 +1,5 @@
 import { query } from '@angular/animations';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderService, HtmlForDirective } from '@terka/my-lib';
 import { table } from 'console';
@@ -12,7 +12,7 @@ import { ListOfRollsService } from './list-of-rolls.service';
   templateUrl: './list-of-rolls.component.html',
   styleUrls: ['./list-of-rolls.component.scss']
 })
-export class ListOfRollsComponent implements OnInit {
+export class ListOfRollsComponent implements OnInit,OnDestroy {
   private _Search: string = "";
   public FitsRoolsArr: AutonomousRoll[]
   public get Search(): string {
@@ -33,7 +33,6 @@ export class ListOfRollsComponent implements OnInit {
   private SordField: string = "Id";
   private SortUp: boolean = true
 
-  @ViewChild('body') body: ElementRef<HTMLElement>;
 
   IsMenuOn: boolean = false;
   MenuRoll: AutonomousRoll;
@@ -42,6 +41,7 @@ export class ListOfRollsComponent implements OnInit {
 
   IsPrintingRollIsUnderway = false
   constructor(private header: HeaderService, private Service: ListOfRollsService, private router: Router, private Printer: PrintService) { }
+ 
   ngOnInit(): void {
     document.oncontextmenu = function () { return false }
     document.querySelector("html")!.style.overflow = "hidden"
@@ -58,6 +58,9 @@ export class ListOfRollsComponent implements OnInit {
         th.UpdateSerch()
       },
     })
+  }
+  ngOnDestroy(): void {
+    document.querySelector("html")!.style.overflow = "auto"
   }
   UpdateSerch() {
     let valuesArr = this._Search.trim().split(" ");
